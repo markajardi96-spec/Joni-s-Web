@@ -112,9 +112,9 @@ h1,h2,h3{
    One line down the whole page; each section pins a node to it. */
 #main{position:relative}
 #main::before{
-  content:"";position:absolute;z-index:0;
+  content:"";position:absolute;z-index:3;
   left:var(--rail);top:0;bottom:0;width:1px;
-  background:var(--ochre);opacity:.5;
+  background:var(--ochre);opacity:.55;
   transform:scaleY(0);transform-origin:top;
   animation:string 1.5s cubic-bezier(.22,1,.36,1) .15s forwards;
 }
@@ -151,14 +151,35 @@ h1,h2,h3{
 .link{color:var(--red);text-decoration:none;border-bottom:1px solid var(--hair)}
 .link:hover{border-bottom-color:currentColor}
 
-/* ---------------- opening ---------------- */
+/* ---------------- opening ----------------
+   Full-bleed film behind the name. The still is always the ground, so
+   the type treatment is the same whether or not the film ever plays. */
 .opening{
-  max-width:var(--wide);margin:0 auto;
-  padding-block:clamp(1.5rem,4vw,3rem) clamp(3rem,7vw,5rem);
+  position:relative;z-index:0;
+  display:grid;align-items:end;
+  min-height:clamp(430px,72vh,700px);
+  overflow:hidden;
+  background:var(--ink) url("https://i.ytimg.com/vi/06KV0G01k4E/maxresdefault.jpg") center/cover no-repeat;
+
+  /* Light palette for this section only. `color` inherits as a computed
+     value, so it has to be re-declared here or children keep body's ink. */
+  --ink:#f6f4ec;
+  --ink-2:#e2e0d4;
+  --moss:#c2c8ba;
+  --hair:rgba(246,244,236,.42);
+  --red:#e2606e;
+  --red-ink:#1a0d10;
+  color:var(--ink);
+}
+.opening-inner{
+  position:relative;z-index:2;
+  width:100%;max-width:var(--wide);margin:0 auto;
+  padding-block:clamp(2.5rem,7vw,4.5rem);
   padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
   padding-right:var(--gutter);
-  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
-  gap:clamp(1.6rem,4vw,3.5rem);align-items:end;
+}
+.film-caption{
+  margin:2.2rem 0 0;font-size:.84rem;color:var(--moss);
 }
 .name{
   font-size:clamp(3.4rem,12vw,8.5rem);
@@ -176,40 +197,34 @@ h1,h2,h3{
 .opening-line{max-width:46ch;margin:1.6rem 0 0;color:var(--ink-2);font-size:1.06rem}
 .opening-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
 
-/* the film keyhole — bleeds off the top of its column */
-/* The still stands in wherever the film is gated off (phones, reduced
-   motion, save-data) — never an empty panel. */
-.keyhole{
-  position:relative;margin:0;align-self:stretch;
-  min-height:clamp(240px,42vw,460px);
-  background:var(--ground-2) url("https://i.ytimg.com/vi/06KV0G01k4E/hqdefault.jpg") center/cover no-repeat;
-  overflow:hidden;
-}
-.film{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
-.keyhole.playing .film{opacity:1}
+/* the film, filling the whole opening */
+.film{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.4s ease}
+.opening.playing .film{opacity:1}
 .film iframe{
   position:absolute;top:50%;left:50%;
-  width:max(100%,177.78vh);height:max(100%,56.25vw);
-  min-width:100%;min-height:100%;
+  width:max(100vw,177.78vh);height:max(56.25vw,100vh);
   transform:translate(-50%,-50%);
   border:0;pointer-events:none;
 }
-.keyhole figcaption{
-  position:absolute;left:0;bottom:0;right:0;z-index:3;
-  padding:2.5rem .9rem .7rem;
-  font-size:.82rem;color:#f2f0e8;
-  background:linear-gradient(180deg,transparent,rgba(16,24,18,.72));
+/* Scrim sits above the film, below the text: heavier at the lower-left
+   where the name and buttons are, lighter over the valley view. */
+.opening::before{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(100deg,rgba(14,22,17,.86) 0%,rgba(14,22,17,.62) 42%,rgba(14,22,17,.3) 78%),
+    linear-gradient(0deg,rgba(14,22,17,.75) 0%,rgba(14,22,17,.12) 55%,rgba(14,22,17,.4) 100%);
 }
+
 .sound{
-  position:absolute;right:.7rem;top:.7rem;z-index:4;
+  position:absolute;right:var(--gutter);top:1.1rem;z-index:4;
   display:inline-flex;align-items:center;gap:.45rem;
-  font:inherit;font-size:.8rem;color:#f2f0e8;
-  background:rgba(16,24,18,.5);backdrop-filter:blur(4px);
-  border:1px solid rgba(242,240,232,.3);border-radius:2px;
-  padding:.3rem .6rem;cursor:pointer;
+  font:inherit;font-size:.82rem;color:#f6f4ec;
+  background:rgba(14,22,17,.5);backdrop-filter:blur(4px);
+  border:1px solid rgba(246,244,236,.32);border-radius:2px;
+  padding:.34rem .7rem;cursor:pointer;
 }
 .sound[hidden]{display:none}
-.sound:hover{background:rgba(16,24,18,.75)}
+.sound:hover{background:rgba(14,22,17,.78)}
 .sound-icon{width:8px;height:8px;border-radius:50%;background:var(--ochre);flex:none}
 
 /* ---------------- note ---------------- */
@@ -315,9 +330,7 @@ h1,h2,h3{
 
 /* ---------------- responsive ---------------- */
 @media (max-width:900px){
-  .opening,.note,.booking{grid-template-columns:1fr}
-  .opening{align-items:start}
-  .keyhole{min-height:0;aspect-ratio:16/10}
+  .note,.booking{grid-template-columns:1fr}
   .topbar-nav{display:none}
   .event:nth-child(3),.event:nth-child(4){margin-left:0}
   .plate,.plate:nth-child(1),.plate:nth-child(2),

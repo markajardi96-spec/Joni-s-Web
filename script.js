@@ -1,5 +1,5 @@
 /* =========================================================
-   Jonuz Markaj — recordings, language, booking, film keyhole
+   Jonuz Markaj — recordings, language, booking, opening film
    ========================================================= */
 
 /* ---------- recordings: click-to-load facades ---------- */
@@ -123,14 +123,14 @@ document.getElementById("langToggle").addEventListener("click", () => {
   setLang(current === "en" ? "sq" : "en");
 });
 
-/* ---------- the film in the keyhole ----------
+/* ---------- the film behind the opening ----------
    Autoplay is only permitted while muted, so it starts silent and the
    visitor turns the sound on. Everything here is an enhancement: if it
-   never starts, the keyhole stays a quiet panel and the page is intact. */
+   never starts, the still stays the ground and the page is intact. */
 const FILM_ID = "06KV0G01k4E";   // Obsesion — Alban Skënderaj
 const FILM_START = 8;            // past the static opening frames
 
-const keyhole = document.getElementById("keyhole");
+const opening = document.getElementById("top");
 const soundBtn = document.getElementById("soundToggle");
 let player = null;
 
@@ -156,7 +156,7 @@ window.onYouTubeIframeAPIReady = () => {
       onReady: e => { e.target.mute(); e.target.playVideo(); },
       onStateChange: e => {
         if (e.data === YT.PlayerState.PLAYING) {
-          keyhole.classList.add("playing");
+          opening.classList.add("playing");
           soundBtn.hidden = false;
         }
       }
@@ -189,7 +189,7 @@ if ("IntersectionObserver" in window) {
       if (en.isIntersecting) player.playVideo();
       else player.pauseVideo();
     }
-  }, { threshold: 0.2 }).observe(keyhole);
+  }, { threshold: 0.2 }).observe(opening);
 }
 
 document.getElementById("year").textContent = new Date().getFullYear();

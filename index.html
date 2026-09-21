@@ -36,7 +36,14 @@
 
   <!-- ===================== OPENING ===================== -->
   <section class="opening" id="top">
-    <div class="opening-text">
+    <div class="film" id="film" aria-hidden="true"><div id="filmPlayer"></div></div>
+
+    <button class="sound" id="soundToggle" type="button" aria-pressed="false" hidden>
+      <span class="sound-icon" aria-hidden="true"></span>
+      <span class="sound-label" data-i18n="film.on">Ndiz zërin</span>
+    </button>
+
+    <div class="opening-inner">
       <h1 class="name"><span>Jonuz</span><span>Markaj</span></h1>
       <p class="role" data-i18n="hero.role">pianist</p>
       <p class="opening-line" data-i18n="hero.note">Piano live për dasma, festa dhe evenimente. Këngët shqipe që i di përmendsh çdo i ftuar, dhe pjesët që mbushin heshtjen mes shërbimeve.</p>
@@ -44,16 +51,8 @@
         <a class="btn btn-solid" href="#contact" data-i18n="hero.cta1">Kontrollo datën tënde</a>
         <a class="btn btn-quiet" href="#recordings" data-i18n="hero.cta2">Dëgjo një regjistrim</a>
       </div>
+      <p class="film-caption" data-i18n="hero.caption">Obsesion, në një dasmë verore</p>
     </div>
-
-    <figure class="keyhole" id="keyhole">
-      <div class="film" id="film"><div id="filmPlayer"></div></div>
-      <button class="sound" id="soundToggle" type="button" aria-pressed="false" hidden>
-        <span class="sound-icon" aria-hidden="true"></span>
-        <span class="sound-label" data-i18n="film.on">Ndiz zërin</span>
-      </button>
-      <figcaption data-i18n="hero.caption">Obsesion, në një dasmë verore</figcaption>
-    </figure>
   </section>
 
   <!-- ===================== NOTE ===================== -->
