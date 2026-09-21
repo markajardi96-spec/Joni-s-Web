@@ -246,12 +246,14 @@ h1,h2,h3{
 
 /* ---------------- recordings ---------------- */
 /* Staggered, varied sizes — a wall of stills, not a uniform grid. */
-.plates{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(1rem,2.4vw,1.9rem)}
-/* Paired 5/7 rows so every row fills, with alternating drop for stagger. */
-.plate{grid-column:span 6;display:flex;flex-direction:column}
-.plate:nth-child(1),.plate:nth-child(4),.plate:nth-child(5){grid-column:span 5}
-.plate:nth-child(2),.plate:nth-child(3),.plate:nth-child(6){grid-column:span 7}
-.plate:nth-child(2),.plate:nth-child(5){margin-top:clamp(0px,2.5vw,2.4rem)}
+/* Even grid: every still the same size, captions on a shared baseline. */
+.plates{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:clamp(1.1rem,2.4vw,1.9rem) clamp(1rem,2vw,1.6rem);
+  align-items:start;
+}
+.plate{display:flex;flex-direction:column}
 
 .plate-frame{
   position:relative;width:100%;aspect-ratio:16/10;
@@ -333,14 +335,10 @@ h1,h2,h3{
   .note,.booking{grid-template-columns:1fr}
   .topbar-nav{display:none}
   .event:nth-child(3),.event:nth-child(4){margin-left:0}
-  .plate,.plate:nth-child(1),.plate:nth-child(2),
-  .plate:nth-child(5),.plate:nth-child(6){grid-column:span 6}
-  .plate:nth-child(2),.plate:nth-child(4){margin-top:0}
 }
 @media (max-width:560px){
   .form .row{grid-template-columns:1fr}
   .opening-actions .btn{flex:1 1 100%;text-align:center}
-  .plate,.plate:nth-child(n){grid-column:span 12}
   .listing li{flex-wrap:wrap;gap:0 .5rem}
   .dots{display:none}
   .listing .by{flex-basis:100%}

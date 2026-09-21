@@ -1,0 +1,36 @@
+---
+import { sq, videos, contact } from '../data/content.js';
+---
+<section class="band recordings" id="recordings">
+  <h2 class="band-title" data-i18n="vid.title">{sq['vid.title']}</h2>
+  <p class="band-lede" data-i18n="vid.lede">{sq['vid.lede']}</p>
+
+  {/* Rendered at build time, so the stills are there before any JS runs;
+      the client only attaches the click-to-load handler. */}
+  <div class="plates" id="videoGrid">
+    {videos.map((v, i) => (
+      <article class="plate">
+        <button
+          class="plate-frame"
+          type="button"
+          data-video={v.id}
+          data-work={v.work}
+          aria-label={`Luaj ${v.work}`}
+          style={`background-image:url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)`}
+        >
+          <span class="play"></span>
+        </button>
+        <div class="plate-caption">
+          <span class="work">{v.work}</span>
+          <span class="by" data-by={i}>{v.by.sq}</span>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <p class="band-more">
+    <a class="link" href={contact.youtube} target="_blank" rel="noopener" data-i18n="vid.more">
+      {sq['vid.more']}
+    </a>
+  </p>
+</section>

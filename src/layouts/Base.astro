@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { sq } from '../data/content.js';
+
+const { title = 'Jonuz Markaj', description } = Astro.props;
+
+// BASE_URL may or may not carry a trailing slash depending on config, so
+// normalise both sides before joining — otherwise the path silently fuses
+// into "/Joni-s-Webfavicon.svg".
+const asset = (path) =>
+  `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
+---
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#f4f6f0" />
+  <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+  <meta property="og:title" content="Jonuz Markaj — Pianist" />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Karla:ital,wght@0,300..600;1,400&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">{sq['skip']}</a>
+  <slot />
+
+  <!-- Loaded as-is: the YouTube API expects to be a plain global script. -->
+  <script is:inline src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>

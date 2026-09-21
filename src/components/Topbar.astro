@@ -1,0 +1,16 @@
+---
+import { sq } from '../data/content.js';
+---
+<header class="topbar" id="topbar">
+  <a class="topbar-name" href="#top">Jonuz Markaj</a>
+  <nav class="topbar-nav">
+    <a href="#note" data-i18n="nav.about">{sq['nav.about']}</a>
+    <a href="#events" data-i18n="nav.services">{sq['nav.services']}</a>
+    <a href="#recordings" data-i18n="nav.videos">{sq['nav.videos']}</a>
+    <a href="#repertoire" data-i18n="nav.repertoire">{sq['nav.repertoire']}</a>
+  </nav>
+  <div class="topbar-side">
+    <a class="topbar-book" href="#contact" data-i18n="nav.book">{sq['nav.book']}</a>
+    <button class="lang" id="langToggle" type="button" aria-label="Change language">English</button>
+  </div>
+</header>

@@ -1,0 +1,61 @@
+---
+import { sq, contact } from '../data/content.js';
+---
+<section class="band booking" id="contact">
+  <div class="booking-text">
+    <h2 data-i18n="ct.title">{sq['ct.title']}</h2>
+    <p data-i18n="ct.lede">{sq['ct.lede']}</p>
+    <ul class="direct">
+      <li>
+        <span data-i18n="ct.phone">{sq['ct.phone']}</span>
+        <a href={contact.phoneHref} data-contact="phone">{contact.phone}</a>
+      </li>
+      <li>
+        <span data-i18n="ct.email">{sq['ct.email']}</span>
+        <a href={`mailto:${contact.email}`} data-contact="email">{contact.email}</a>
+      </li>
+      <li>
+        <span>YouTube</span>
+        <a href={contact.youtube} target="_blank" rel="noopener">{contact.youtubeHandle}</a>
+      </li>
+    </ul>
+  </div>
+
+  <form class="form" id="bookForm" novalidate>
+    <div class="row">
+      <label for="f-name">
+        <span data-i18n="ct.f.name">{sq['ct.f.name']}</span>
+        <input id="f-name" type="text" name="name" autocomplete="name" required />
+      </label>
+      <label for="f-contact">
+        <span data-i18n="ct.f.contact">{sq['ct.f.contact']}</span>
+        <input id="f-contact" type="text" name="contact" required />
+      </label>
+    </div>
+    <div class="row">
+      <label for="f-date">
+        <span data-i18n="ct.f.date">{sq['ct.f.date']}</span>
+        <input id="f-date" type="date" name="date" />
+      </label>
+      <label for="f-type">
+        <span data-i18n="ct.f.type">{sq['ct.f.type']}</span>
+        <select id="f-type" name="type">
+          <option data-i18n="ct.f.t1">{sq['ct.f.t1']}</option>
+          <option data-i18n="ct.f.t2">{sq['ct.f.t2']}</option>
+          <option data-i18n="ct.f.t3">{sq['ct.f.t3']}</option>
+          <option data-i18n="ct.f.t4">{sq['ct.f.t4']}</option>
+        </select>
+      </label>
+    </div>
+    <label for="f-place">
+      <span data-i18n="ct.f.place">{sq['ct.f.place']}</span>
+      <input id="f-place" type="text" name="place" />
+    </label>
+    <label for="f-msg">
+      <span data-i18n="ct.f.msg">{sq['ct.f.msg']}</span>
+      <textarea id="f-msg" name="message" rows="3"></textarea>
+    </label>
+    <button class="btn btn-solid" type="submit" data-i18n="ct.f.send">{sq['ct.f.send']}</button>
+    <p class="form-note" id="formNote" role="status"></p>
+  </form>
+</section>

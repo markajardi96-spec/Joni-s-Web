@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Jonuz Markaj">
+  <rect width="32" height="32" rx="5" fill="#1b2a21"/>
+  <!-- the string, with its node — the site's structural motif -->
+  <line x1="16" y1="5" x2="16" y2="27" stroke="#c98a2b" stroke-width="1.4" opacity=".85"/>
+  <rect x="12.6" y="12.6" width="6.8" height="6.8" transform="rotate(45 16 16)" fill="#c98a2b"/>
+</svg>

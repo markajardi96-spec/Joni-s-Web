@@ -1,0 +1,13 @@
+---
+import { sq } from '../data/content.js';
+---
+<section class="band note" id="note">
+  <div class="note-lead">
+    <h2 data-i18n="note.title">{sq['note.title']}</h2>
+  </div>
+  <div class="note-body">
+    <p data-i18n="note.p1" set:html={sq['note.p1']}></p>
+    <p data-i18n="note.p2">{sq['note.p2']}</p>
+    <p class="note-meta" data-i18n="note.p3">{sq['note.p3']}</p>
+  </div>
+</section>

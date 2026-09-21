@@ -1,0 +1,33 @@
+---
+import { sq, repertoire } from '../data/content.js';
+
+const columns = [
+  { titleKey: 'rep.c1', items: repertoire.albanian },
+  { titleKey: 'rep.c2', items: repertoire.international },
+];
+---
+<section class="band repertoire" id="repertoire">
+  <h2 class="band-title" data-i18n="rep.title">{sq['rep.title']}</h2>
+  <p class="band-lede" data-i18n="rep.lede">{sq['rep.lede']}</p>
+
+  <div class="rep-cols">
+    {columns.map((col) => (
+      <div>
+        <h3 data-i18n={col.titleKey}>{sq[col.titleKey]}</h3>
+        <ul class="listing">
+          {col.items.map((item) => (
+            <li>
+              {item.workKey
+                ? <span class="work" data-i18n={item.workKey}>{sq[item.workKey]}</span>
+                : <span class="work">{item.work}</span>}
+              <span class="dots" aria-hidden="true"></span>
+              {item.byKey
+                ? <span class="by" data-i18n={item.byKey}>{sq[item.byKey]}</span>
+                : <span class="by">{item.by}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,16 @@
+---
+import { sq } from '../data/content.js';
+
+const events = [1, 2, 3];
+---
+<section class="band events" id="events">
+  <h2 class="band-title" data-i18n="ev.title">{sq['ev.title']}</h2>
+
+  {events.map((n) => (
+    <article class="event">
+      <h3 data-i18n={`ev.${n}.h`}>{sq[`ev.${n}.h`]}</h3>
+      <p data-i18n={`ev.${n}.p`}>{sq[`ev.${n}.p`]}</p>
+      <p class="event-note" data-i18n={`ev.${n}.n`}>{sq[`ev.${n}.n`]}</p>
+    </article>
+  ))}
+</section>

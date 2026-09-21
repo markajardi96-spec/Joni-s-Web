@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Topbar from '../components/Topbar.astro';
+import Opening from '../components/Opening.astro';
+import Note from '../components/Note.astro';
+import Events from '../components/Events.astro';
+import Recordings from '../components/Recordings.astro';
+import Repertoire from '../components/Repertoire.astro';
+import Booking from '../components/Booking.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const description =
+  'Jonuz Markaj — pianist për dasma, festa dhe evenimente. Muzikë live në piano, shqip dhe ndërkombëtare.';
+---
+<Base title="Jonuz Markaj" description={description}>
+  <Topbar />
+  <main id="main">
+    <Opening />
+    <Note />
+    <Events />
+    <Recordings />
+    <Repertoire />
+    <Booking />
+  </main>
+  <SiteFooter />
+</Base>
