@@ -1,429 +1,343 @@
 /* =========================================================
-   Jonuz Markaj — printed recital programme
-   Palette: programme stock, engraving ink, oxblood, antique brass
+   Jonuz Markaj — pianist
+   Concept: "the string" — one ochre line down the page, with a
+   node where each section attaches. Sections hang off it,
+   asymmetric and left-aligned. Daylight palette, taken from the
+   outdoor terrace weddings his recordings are actually filmed at.
    ========================================================= */
 
 :root{
-  /* light — programme stock */
-  --paper:#f0ebe1;
-  --paper-2:#e7e1d4;
-  --ink:#241c18;
-  --ink-2:#4a3f38;
-  --mute:#7e7367;
-  --wine:#6e1f2a;
-  --wine-ink:#f0ebe1;
-  --brass:#a8823c;
-  --rule:#cdc4b2;
-  --rule-soft:#dbd3c4;
+  --ground:#f4f6f0;      /* limewash */
+  --ground-2:#e9ede2;    /* shaded limewash */
+  --ink:#1b2a21;         /* pine */
+  --ink-2:#3e5347;
+  --moss:#6b8272;        /* secondary text */
+  --red:#a81c2e;         /* Albanian red, deepened */
+  --red-ink:#f7f4ec;
+  --ochre:#c98a2b;       /* the string */
+  --hair:#d3dacb;
 
-  --serif:"Bodoni Moda",Didot,"Times New Roman",serif;
-  --body:Spectral,Georgia,"Times New Roman",serif;
-  --label:"Barlow Condensed","Helvetica Neue",Arial,sans-serif;
+  --display:Fraunces,Georgia,"Times New Roman",serif;
+  --body:Karla,"Helvetica Neue",Arial,sans-serif;
 
-  --measure:64ch;
-  --sheet:1080px;
+  --rail:clamp(18px,4vw,64px);   /* where the string sits */
   --gutter:clamp(20px,5vw,56px);
+  --wide:1180px;
+  --measure:68ch;
 }
 
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#17130f;
-    --paper-2:#1f1a15;
-    --ink:#ece4d6;
-    --ink-2:#c3b7a5;
-    --mute:#8d8271;
-    --wine:#c9606c;
-    --wine-ink:#1a0d10;
-    --brass:#c9a05a;
-    --rule:#3a3128;
-    --rule-soft:#2c251e;
+    --ground:#141a16;
+    --ground-2:#1c241e;
+    --ink:#edf0e6;
+    --ink-2:#c6d0c0;
+    --moss:#8ca092;
+    --red:#e07886;
+    --red-ink:#160b0e;
+    --ochre:#d9a84e;
+    --hair:#2c3730;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#17130f;
-  --paper-2:#1f1a15;
-  --ink:#ece4d6;
-  --ink-2:#c3b7a5;
-  --mute:#8d8271;
-  --wine:#c9606c;
-  --wine-ink:#1a0d10;
-  --brass:#c9a05a;
-  --rule:#3a3128;
-  --rule-soft:#2c251e;
+  --ground:#141a16;
+  --ground-2:#1c241e;
+  --ink:#edf0e6;
+  --ink-2:#c6d0c0;
+  --moss:#8ca092;
+  --red:#e07886;
+  --red-ink:#160b0e;
+  --ochre:#d9a84e;
+  --hair:#2c3730;
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 body{
   margin:0;
-  background:var(--paper);
+  background:var(--ground);
   color:var(--ink);
   font-family:var(--body);
-  font-size:clamp(16px,.45vw + 15px,17.5px);
-  line-height:1.72;
-  font-weight:300;
+  font-size:clamp(16px,.4vw + 15px,17.5px);
+  line-height:1.62;
+  font-weight:350;
   -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;display:block}
-p{margin:0 0 1.1em}
+p{margin:0 0 1.05em}
 a{color:inherit}
-em{font-style:italic;color:var(--ink)}
+em{font-style:italic}
 
-:focus-visible{outline:2px solid var(--wine);outline-offset:3px;border-radius:2px}
-
-.skip{
-  position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
-  padding:.6rem 1rem;z-index:100;font-family:var(--label);
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:450;
+  font-variation-settings:"SOFT" 28,"WONK" 1;
+  line-height:1.06;
+  letter-spacing:-.015em;
+  margin:0 0 .5em;
+  text-wrap:balance;
 }
+
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--ground);padding:.6rem 1rem;z-index:100}
 .skip:focus{left:8px;top:8px}
 
-/* ---------- shared type roles ---------- */
-.movement{
-  font-family:var(--label);
-  text-transform:uppercase;
-  letter-spacing:.22em;
-  font-size:.74rem;
-  font-weight:500;
-  color:var(--mute);
-  margin:0 0 1.4rem;
+/* ---------------- topbar ---------------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:baseline;gap:1.4rem;
+  padding:1rem var(--gutter);
+  background:color-mix(in srgb,var(--ground) 90%,transparent);
+  backdrop-filter:blur(8px);
 }
-h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1;margin:0 0 .5em;text-wrap:balance}
-h2{font-size:clamp(1.75rem,3.4vw,2.6rem);letter-spacing:-.005em}
-h3{font-size:clamp(1.25rem,2vw,1.55rem)}
-
-.ornament{color:var(--brass);font-size:.9rem;line-height:1}
-
-.rule-pair{display:flex;align-items:center;gap:1rem;width:min(460px,100%);margin:1.6rem auto}
-.rule{flex:1;height:1px;background:var(--rule)}
-
-/* ---------- masthead ---------- */
-.masthead{
-  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
-  display:flex;align-items:center;gap:1.5rem;
-  padding:.85rem var(--gutter);
-  background:color-mix(in srgb,var(--paper) 88%,transparent);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid transparent;
-  transition:border-color .3s;
-}
-.masthead.scrolled{border-bottom-color:var(--rule)}
-.masthead-name{
-  font-family:var(--serif);font-size:1.05rem;letter-spacing:.04em;
+.topbar-name{
+  font-family:var(--display);font-size:1.02rem;font-weight:500;
   text-decoration:none;white-space:nowrap;
 }
-.masthead-nav{display:flex;gap:1.5rem;margin-left:auto}
-.masthead-nav a{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;
-  font-size:.78rem;text-decoration:none;color:var(--mute);
-  padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
-}
-.masthead-nav a:hover{color:var(--ink);border-bottom-color:var(--brass)}
-.masthead-side{display:flex;align-items:center;gap:.7rem;margin-left:auto}
-.masthead-nav + .masthead-side{margin-left:0}
-.masthead-cta{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;
-  text-decoration:none;color:var(--wine);border-bottom:1px solid var(--wine);padding-bottom:1px;
-}
+.topbar-nav{display:flex;gap:1.5rem;margin-left:auto}
+.topbar-nav a{font-size:.92rem;color:var(--moss);text-decoration:none}
+.topbar-nav a:hover{color:var(--ink)}
+.topbar-side{display:flex;align-items:baseline;gap:1rem;margin-left:auto}
+.topbar-nav + .topbar-side{margin-left:1.5rem}
+.topbar-book{font-size:.92rem;color:var(--red);text-decoration:none;border-bottom:1px solid currentColor}
 .lang{
-  font-family:var(--label);letter-spacing:.14em;font-size:.72rem;
-  background:none;border:1px solid var(--rule);color:var(--mute);
-  padding:.25rem .5rem;cursor:pointer;
+  font:inherit;font-size:.86rem;color:var(--moss);
+  background:none;border:0;padding:0;cursor:pointer;
+  border-bottom:1px solid var(--hair);
 }
-.lang:hover{color:var(--ink);border-color:var(--brass)}
+.lang:hover{color:var(--ink);border-bottom-color:var(--ochre)}
 
-/* ---------- title page ---------- */
-.title-page{
-  position:relative;
-  max-width:var(--sheet);margin:0 auto;
-  padding:clamp(3rem,7vw,5.5rem) var(--gutter) clamp(3rem,6vw,4.5rem);
-  text-align:center;
+/* ---------------- the string ----------------
+   One line down the whole page; each section pins a node to it. */
+#main{position:relative}
+#main::before{
+  content:"";position:absolute;z-index:0;
+  left:var(--rail);top:0;bottom:0;width:1px;
+  background:var(--ochre);opacity:.5;
+  transform:scaleY(0);transform-origin:top;
+  animation:string 1.5s cubic-bezier(.22,1,.36,1) .15s forwards;
+}
+@keyframes string{to{transform:scaleY(1)}}
+
+.band,.opening{position:relative;z-index:1}
+.band::before{
+  content:"";position:absolute;z-index:2;
+  left:var(--rail);top:clamp(3rem,7vw,5.2rem);
+  width:7px;height:7px;margin-left:-3px;
+  background:var(--ochre);transform:rotate(45deg);
 }
 
-/* ---------- film backdrop ---------- */
-/* Only applied once the player is actually running (.filmed), so the
-   paper title page stands on its own if the video never loads. */
-.film{
-  position:absolute;inset:0;z-index:0;overflow:hidden;
-  background:#100b09;
-  opacity:0;transition:opacity 1.4s ease;
-  pointer-events:none;
+/* ---------------- shared bits ---------------- */
+.band{
+  max-width:var(--wide);margin:0 auto;
+  padding-block:clamp(3rem,7vw,5.6rem);
+  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
+  padding-right:var(--gutter);
 }
-.title-page.filmed{
-  --ink:#f5f0e5;
-  --ink-2:#dbd2c1;
-  --mute:#b4a894;
-  --wine:#d97f89;
-  --wine-ink:#1b0e11;
-  --brass:#dcb872;
-  --rule:rgba(245,240,229,.38);
-  --rule-soft:rgba(245,240,229,.2);
-  --paper:#100b09;
+.band-title{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-bottom:.4em}
+.band-lede{color:var(--moss);max-width:56ch;margin-bottom:2.6rem}
+.band-more{margin:2.4rem 0 0}
+
+.btn{
+  display:inline-block;text-decoration:none;cursor:pointer;
+  font:inherit;font-size:.96rem;font-weight:500;
+  padding:.72rem 1.4rem;border:1px solid transparent;border-radius:2px;
+}
+.btn-solid{background:var(--red);color:var(--red-ink)}
+.btn-solid:hover{background:var(--ink)}
+.btn-quiet{color:var(--ink);border-color:var(--hair)}
+.btn-quiet:hover{border-color:var(--ink)}
+.link{color:var(--red);text-decoration:none;border-bottom:1px solid var(--hair)}
+.link:hover{border-bottom-color:currentColor}
+
+/* ---------------- opening ---------------- */
+.opening{
+  max-width:var(--wide);margin:0 auto;
+  padding-block:clamp(1.5rem,4vw,3rem) clamp(3rem,7vw,5rem);
+  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
+  padding-right:var(--gutter);
+  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
+  gap:clamp(1.6rem,4vw,3.5rem);align-items:end;
+}
+.name{
+  font-size:clamp(3.4rem,12vw,8.5rem);
+  font-weight:400;
+  font-variation-settings:"SOFT" 40,"WONK" 1,"opsz" 144;
+  line-height:.86;letter-spacing:-.035em;
+  margin:0;
+  display:flex;flex-direction:column;
+}
+.name span:last-child{margin-left:.08em}
+.role{
+  font-family:var(--display);font-style:italic;font-size:1.3rem;
+  color:var(--moss);margin:.5rem 0 0;
+}
+.opening-line{max-width:46ch;margin:1.6rem 0 0;color:var(--ink-2);font-size:1.06rem}
+.opening-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+
+/* the film keyhole — bleeds off the top of its column */
+/* The still stands in wherever the film is gated off (phones, reduced
+   motion, save-data) — never an empty panel. */
+.keyhole{
+  position:relative;margin:0;align-self:stretch;
+  min-height:clamp(240px,42vw,460px);
+  background:var(--ground-2) url("https://i.ytimg.com/vi/06KV0G01k4E/hqdefault.jpg") center/cover no-repeat;
   overflow:hidden;
-  /* `color` inherits as a computed value, so children would keep body's
-     dark ink unless it is re-resolved from the tokens here. */
-  color:var(--ink);
 }
-.title-page.filmed .film{opacity:1}
-/* .sound is positioned on its own — don't clobber it back to relative. */
-.title-page.filmed > *:not(.film):not(.sound){position:relative;z-index:1}
+.film{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.keyhole.playing .film{opacity:1}
 .film iframe{
   position:absolute;top:50%;left:50%;
-  width:100vw;height:56.25vw;
-  min-width:177.78vh;min-height:100%;
+  width:max(100%,177.78vh);height:max(100%,56.25vw);
+  min-width:100%;min-height:100%;
   transform:translate(-50%,-50%);
   border:0;pointer-events:none;
 }
-/* scrim: dark enough for engraved type, light enough to read as film */
-.film::after{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(16,11,9,.88) 0%,rgba(16,11,9,.74) 45%,rgba(16,11,9,.92) 100%),
-    radial-gradient(120% 90% at 50% 45%,rgba(16,11,9,.45) 0%,rgba(16,11,9,.78) 100%);
+.keyhole figcaption{
+  position:absolute;left:0;bottom:0;right:0;z-index:3;
+  padding:2.5rem .9rem .7rem;
+  font-size:.82rem;color:#f2f0e8;
+  background:linear-gradient(180deg,transparent,rgba(16,24,18,.72));
 }
-
-.sound[hidden]{display:none}
 .sound{
-  position:absolute;right:var(--gutter);top:clamp(1rem,3vw,2rem);z-index:2;
-  display:inline-flex;align-items:center;gap:.55rem;
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;
-  color:var(--ink-2);background:rgba(16,11,9,.45);
-  border:1px solid var(--rule);padding:.42rem .8rem;cursor:pointer;
-  backdrop-filter:blur(4px);
-  transition:color .2s,border-color .2s;
+  position:absolute;right:.7rem;top:.7rem;z-index:4;
+  display:inline-flex;align-items:center;gap:.45rem;
+  font:inherit;font-size:.8rem;color:#f2f0e8;
+  background:rgba(16,24,18,.5);backdrop-filter:blur(4px);
+  border:1px solid rgba(242,240,232,.3);border-radius:2px;
+  padding:.3rem .6rem;cursor:pointer;
 }
-.sound:hover{color:var(--ink);border-color:var(--brass)}
-.sound-icon{
-  width:9px;height:9px;border-radius:50%;
-  background:var(--wine);flex:none;
-  box-shadow:0 0 0 0 color-mix(in srgb,var(--wine) 70%,transparent);
-}
-.sound[aria-pressed="true"] .sound-icon{animation:pulse 2.4s ease-out infinite}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--wine) 65%,transparent)}
-  70%{box-shadow:0 0 0 9px transparent}
-  100%{box-shadow:0 0 0 0 transparent}
-}
-.stamp{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.3em;
-  font-size:.76rem;color:var(--wine);margin:0;
-}
-.engraved{
-  font-size:clamp(3.1rem,11.5vw,7.4rem);
-  font-weight:500;
-  letter-spacing:.01em;
-  line-height:.94;
-  margin:0;
-}
-.role{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.42em;
-  font-size:.82rem;color:var(--ink-2);margin:.9rem 0 0;padding-left:.42em;
-}
-.title-note{
-  max-width:52ch;margin:.4rem auto 0;color:var(--ink-2);
-  font-size:1.05rem;font-style:italic;
-}
-.title-actions{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin:2.2rem 0 0}
+.sound[hidden]{display:none}
+.sound:hover{background:rgba(16,24,18,.75)}
+.sound-icon{width:8px;height:8px;border-radius:50%;background:var(--ochre);flex:none}
 
-.colophon{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:1.4rem;margin:3.2rem 0 0;padding-top:1.6rem;border-top:1px solid var(--rule-soft);
-  text-align:left;
-}
-.colophon div{display:flex;flex-direction:column;gap:.1rem}
-.colophon dt{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.18em;
-  font-size:.7rem;color:var(--mute);
-}
-.colophon dd{margin:0;font-family:var(--serif);font-size:1.02rem;color:var(--ink)}
-
-/* ---------- buttons ---------- */
-.btn{
-  display:inline-block;text-decoration:none;cursor:pointer;
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;
-  font-size:.82rem;padding:.72rem 1.5rem;border:1px solid var(--ink);
-  transition:background .2s,color .2s,border-color .2s;
-}
-.btn-solid{background:var(--wine);border-color:var(--wine);color:var(--wine-ink)}
-.btn-solid:hover{background:transparent;color:var(--wine)}
-.btn-line{background:transparent;color:var(--ink);border-color:var(--rule)}
-.btn-line:hover{border-color:var(--ink)}
-
-/* ---------- sheets ---------- */
-.sheet{
-  max-width:var(--sheet);margin:0 auto;
-  padding-block:clamp(3.2rem,7vw,5.5rem);
-  padding-inline:var(--gutter);
-  border-top:1px solid var(--rule-soft);
-}
-.sheet-title{margin-bottom:.35em}
-.sheet-lede{color:var(--mute);max-width:var(--measure);margin-bottom:2.6rem}
-.center{text-align:center;margin:2.6rem 0 0}
-
-/* ---------- programme note ---------- */
-.note-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.85fr);gap:clamp(2rem,5vw,4rem)}
+/* ---------------- note ---------------- */
+.note{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(1.6rem,4vw,3.5rem)}
+.note-lead h2{font-size:clamp(1.6rem,3.2vw,2.35rem);margin:0}
 .note-body{max-width:var(--measure)}
-.note-body h2{margin-bottom:.7em}
 .note-body p{color:var(--ink-2)}
-.marginalia{
-  border-left:1px solid var(--rule);padding-left:clamp(1.2rem,2.5vw,2rem);
-  align-self:start;
-}
-.pull{
-  font-family:var(--serif);font-size:1.22rem;line-height:1.35;font-style:italic;
-  color:var(--ink);margin-bottom:1rem;
-}
-.link-arrow{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;
-  color:var(--wine);text-decoration:none;border-bottom:1px solid currentColor;
-}
+.note-meta{color:var(--moss);font-size:.95rem}
 
-/* ---------- leader dots (the programme device) ---------- */
-.leader{
-  flex:1 1 2rem;min-width:1.5rem;align-self:baseline;
-  border-bottom:1px dotted var(--rule);
-  transform:translateY(-.32em);
-}
+/* ---------------- events ---------------- */
+/* No cards: each entry is text, offset from the one before it. */
+.event{max-width:58ch;padding-block:clamp(1.2rem,2.5vw,1.8rem)}
+.event + .event{border-top:1px solid var(--hair)}
+.event:nth-child(3){margin-left:clamp(0px,4vw,5rem)}
+.event:nth-child(4){margin-left:clamp(0px,8vw,10rem)}
+.event h3{font-size:clamp(1.3rem,2.2vw,1.7rem);margin-bottom:.35em}
+.event p{color:var(--ink-2)}
+.event-note{color:var(--moss);font-size:.93rem;margin:0}
 
-/* ---------- programme listing ---------- */
-.programme{list-style:none;margin:0;padding:0}
-.entry{padding-block:clamp(1.6rem,3vw,2.2rem);border-bottom:1px solid var(--rule-soft)}
-.entry:first-child{border-top:1px solid var(--rule)}
-.entry-head{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.7rem}
-.entry-head h3{margin:0}
-.tempo{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;
-  font-size:.76rem;color:var(--mute);white-space:nowrap;
-}
-.entry > p{color:var(--ink-2);max-width:var(--measure);margin-bottom:.9rem}
-.detail{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem 1.6rem}
-.detail li{
-  font-family:var(--label);font-size:.86rem;letter-spacing:.04em;color:var(--mute);
-  padding-left:.9rem;position:relative;
-}
-.detail li::before{
-  content:"";position:absolute;left:0;top:.62em;width:4px;height:4px;background:var(--brass);
-}
+/* ---------------- recordings ---------------- */
+/* Staggered, varied sizes — a wall of stills, not a uniform grid. */
+.plates{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(1rem,2.4vw,1.9rem)}
+/* Paired 5/7 rows so every row fills, with alternating drop for stagger. */
+.plate{grid-column:span 6;display:flex;flex-direction:column}
+.plate:nth-child(1),.plate:nth-child(4),.plate:nth-child(5){grid-column:span 5}
+.plate:nth-child(2),.plate:nth-child(3),.plate:nth-child(6){grid-column:span 7}
+.plate:nth-child(2),.plate:nth-child(5){margin-top:clamp(0px,2.5vw,2.4rem)}
 
-/* ---------- plates (video) ---------- */
-.plates{background:var(--paper-2);max-width:none;border-top-color:var(--rule)}
-.plates > *{max-width:var(--sheet);margin-left:auto;margin-right:auto}
-.plate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:clamp(1.4rem,3vw,2.2rem)}
-.plate{display:flex;flex-direction:column}
 .plate-frame{
-  position:relative;aspect-ratio:16/10;max-width:100%;width:100%;
-  border:1px solid var(--rule);padding:0;margin:0;display:block;cursor:pointer;
-  background:var(--ink) center/cover no-repeat;
-  filter:saturate(.78);
-  transition:filter .35s;
+  position:relative;width:100%;aspect-ratio:16/10;
+  border:0;padding:0;margin:0;display:block;cursor:pointer;
+  background:var(--ground-2) center/cover no-repeat;
 }
 .plate-frame::after{
   content:"";position:absolute;inset:0;
-  background:color-mix(in srgb,var(--paper) 14%,transparent);
-  transition:background .35s;
+  background:rgba(27,42,33,.18);transition:background .3s;
 }
-.plate-frame:hover{filter:saturate(1)}
-.plate-frame:hover::after{background:transparent}
+.plate-frame:hover::after{background:rgba(27,42,33,0)}
 .play{
-  position:absolute;inset:0;margin:auto;width:52px;height:52px;border-radius:50%;
-  background:var(--wine);display:grid;place-items:center;z-index:2;
-  transition:transform .3s;
+  position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;
+  background:var(--red);display:grid;place-items:center;z-index:2;
 }
-.plate-frame:hover .play{transform:scale(1.09)}
 .play::before{
-  content:"";border-left:14px solid var(--wine-ink);
-  border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px;
+  content:"";border-left:13px solid var(--red-ink);
+  border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px;
 }
-.plate iframe{width:100%;aspect-ratio:16/10;display:block;border:1px solid var(--rule)}
-.plate-caption{display:flex;align-items:baseline;gap:.6rem;padding-top:.85rem}
-.plate-caption .work{font-family:var(--serif);font-size:1.02rem}
-.plate-caption .attrib{
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;
-  font-size:.7rem;color:var(--mute);white-space:nowrap;
-}
+.plate iframe{width:100%;aspect-ratio:16/10;display:block;border:0}
+.plate-caption{padding-top:.7rem}
+.plate-caption .work{font-family:var(--display);font-size:1rem;display:block}
+.plate-caption .by{font-size:.84rem;color:var(--moss)}
 
-/* ---------- repertoire listing ---------- */
-.rep-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(2rem,5vw,4rem)}
+/* ---------------- repertoire ---------------- */
+.rep-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(1.8rem,4vw,3.5rem)}
+.rep-cols h3{font-size:1.2rem;color:var(--moss);font-weight:400;margin-bottom:.9rem}
 .listing{list-style:none;margin:0;padding:0}
 .listing li{
-  display:flex;align-items:baseline;gap:.6rem;
-  padding-block:.62rem;border-bottom:1px solid var(--rule-soft);
+  display:flex;align-items:baseline;gap:.5rem;
+  padding-block:.5rem;border-bottom:1px solid var(--hair);
 }
-.listing .work{font-family:var(--serif);font-size:1.04rem;flex:0 1 auto}
-.listing .attrib{
-  font-family:var(--label);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--mute);white-space:nowrap;text-decoration:none;flex:0 0 auto;
-}
-a.attrib{color:var(--wine);border-bottom:1px solid transparent}
-a.attrib:hover{border-bottom-color:currentColor}
+.listing .work{font-family:var(--display);font-size:1.02rem;flex:0 1 auto}
+/* leader dots: a real concert-programme device, kept only here */
+.dots{flex:1 1 1.5rem;min-width:1rem;align-self:baseline;border-bottom:1px dotted var(--hair);transform:translateY(-.3em)}
+.listing .by{font-size:.86rem;color:var(--moss);white-space:nowrap;flex:0 0 auto}
 
-/* ---------- reply card ---------- */
-.reply{max-width:none;background:var(--paper);border-top-color:var(--rule)}
-.reply-card{
-  max-width:var(--sheet);margin:0 auto;
-  border:1px solid var(--rule);
-  padding:clamp(1.6rem,4vw,3rem);
-  background:var(--paper-2);
+/* ---------------- booking ---------------- */
+.booking{
+  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:clamp(1.8rem,4vw,3.5rem);
 }
-.reply-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,3.5rem)}
-.reply-text p{color:var(--ink-2)}
-.direct{margin-top:1.8rem}
+.booking h2{font-size:clamp(1.7rem,3.4vw,2.5rem)}
+.booking-text p{color:var(--ink-2);max-width:42ch}
+.direct{list-style:none;margin:1.8rem 0 0;padding:0}
+.direct li{padding-block:.5rem;border-bottom:1px solid var(--hair);font-size:.95rem}
+.direct li span{color:var(--moss);display:inline-block;min-width:5.5rem}
+.direct a{color:var(--red);text-decoration:none}
+.direct a:hover{text-decoration:underline}
 
-.form{display:flex;flex-direction:column;gap:.9rem}
-.form .row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.form label{
-  display:flex;flex-direction:column;gap:.35rem;
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;
-  font-size:.72rem;color:var(--mute);
-}
+.form{display:flex;flex-direction:column;gap:.85rem}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.form label{display:flex;flex-direction:column;gap:.3rem;font-size:.88rem;color:var(--moss)}
 .form input,.form select,.form textarea{
-  font-family:var(--body);font-size:.98rem;font-weight:300;color:var(--ink);
-  background:var(--paper);border:1px solid var(--rule);border-radius:0;
-  padding:.62rem .7rem;transition:border-color .2s;
-  min-width:0;width:100%;
+  font:inherit;font-size:.98rem;color:var(--ink);width:100%;min-width:0;
+  background:var(--ground);border:1px solid var(--hair);border-radius:2px;
+  padding:.6rem .7rem;
 }
-.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--wine)}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--red)}
 .form textarea{resize:vertical}
-.form .btn{align-self:flex-start;margin-top:.5rem}
-.form-note{
-  font-family:var(--label);letter-spacing:.1em;font-size:.8rem;
-  color:var(--wine);min-height:1.2em;margin:0;
-}
+.form .btn{align-self:flex-start;margin-top:.4rem}
+.form-note{font-size:.88rem;color:var(--red);min-height:1.2em;margin:0}
 
-/* ---------- footer ---------- */
+/* ---------------- footer ---------------- */
 .footer{
-  display:flex;justify-content:center;align-items:center;gap:1.2rem;flex-wrap:wrap;
-  max-width:var(--sheet);margin:0 auto;
-  padding-block:2.4rem;padding-inline:var(--gutter);
-  border-top:1px solid var(--rule-soft);
-  font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;
-  font-size:.74rem;color:var(--mute);
+  max-width:var(--wide);margin:0 auto;
+  padding-block:2.2rem;
+  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
+  padding-right:var(--gutter);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid var(--hair);
+  font-size:.86rem;color:var(--moss);
 }
-.footer a{text-decoration:none;color:var(--mute);border-bottom:1px solid var(--rule)}
+.footer a{color:var(--moss);text-decoration:none;border-bottom:1px solid var(--hair)}
 .footer a:hover{color:var(--ink)}
 
-/* ---------- responsive ---------- */
-@media (max-width:880px){
-  .note-grid,.reply-grid{grid-template-columns:1fr}
-  .marginalia{border-left:0;border-top:1px solid var(--rule);padding-left:0;padding-top:1.4rem}
-  .masthead-nav{display:none}
+/* ---------------- responsive ---------------- */
+@media (max-width:900px){
+  .opening,.note,.booking{grid-template-columns:1fr}
+  .opening{align-items:start}
+  .keyhole{min-height:0;aspect-ratio:16/10}
+  .topbar-nav{display:none}
+  .event:nth-child(3),.event:nth-child(4){margin-left:0}
+  .plate,.plate:nth-child(1),.plate:nth-child(2),
+  .plate:nth-child(5),.plate:nth-child(6){grid-column:span 6}
+  .plate:nth-child(2),.plate:nth-child(4){margin-top:0}
 }
-@media (max-width:520px){
+@media (max-width:560px){
   .form .row{grid-template-columns:1fr}
-  .title-actions .btn{flex:1 1 100%;text-align:center}
-  .entry-head{gap:.4rem}
-  .leader{display:none}
-  .tempo{flex-basis:100%}
-  .listing li{flex-wrap:wrap;gap:.1rem .6rem}
-  .listing .attrib{flex-basis:100%}
+  .opening-actions .btn{flex:1 1 100%;text-align:center}
+  .plate,.plate:nth-child(n){grid-column:span 12}
+  .listing li{flex-wrap:wrap;gap:0 .5rem}
+  .dots{display:none}
+  .listing .by{flex-basis:100%}
 }
 
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-}
-
-/* The film is an enhancement: never on small screens (data cost, and the
-   16:9 crop leaves nothing readable at phone width) and never when the
-   visitor has asked for reduced motion. JS checks the same conditions. */
+/* The film is an enhancement — never on phones, never under reduced motion. */
 @media (max-width:719px),(prefers-reduced-motion:reduce){
-  .film,.sound{display:none}
+  .sound{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  #main::before{transform:scaleY(1)}
 }

@@ -1,15 +1,15 @@
 /* =========================================================
-   Jonuz Markaj — plates, translation, reply card
+   Jonuz Markaj — recordings, language, booking, film keyhole
    ========================================================= */
 
-/* ---------- plates: click-to-load facades, so the page stays light ---------- */
+/* ---------- recordings: click-to-load facades ---------- */
 const VIDEOS = [
-  { id: "qZPqkDOHuMo", work: "Mora Fjalë",                 attrib: { sq: "Tradicionale",  en: "Traditional" } },
-  { id: "06KV0G01k4E", work: "Obsesion",                   attrib: { sq: "A. Skënderaj",  en: "A. Skënderaj" } },
-  { id: "z9pE8HtvNfc", work: "Ja Ku Jam",                  attrib: { sq: "A. Gjebrea",    en: "A. Gjebrea" } },
-  { id: "ynxxdaoLRy0", work: "Martesa Jonë",               attrib: { sq: "Për dasma",     en: "For weddings" } },
-  { id: "zNiWqJARQfA", work: "Song from a Secret Garden",  attrib: { sq: "R. Løvland",    en: "R. Løvland" } },
-  { id: "ectMmQY2idw", work: "Pyete Hënën",                attrib: { sq: "Piano cover",   en: "Piano cover" } }
+  { id: "qZPqkDOHuMo", work: "Mora Fjalë",                by: { sq: "tradicionale",     en: "traditional" } },
+  { id: "06KV0G01k4E", work: "Obsesion",                  by: { sq: "Alban Skënderaj",  en: "Alban Skënderaj" } },
+  { id: "z9pE8HtvNfc", work: "Ja Ku Jam",                 by: { sq: "Ardit Gjebrea",    en: "Ardit Gjebrea" } },
+  { id: "ynxxdaoLRy0", work: "Martesa Jonë",              by: { sq: "për dasma",        en: "for weddings" } },
+  { id: "zNiWqJARQfA", work: "Song from a Secret Garden", by: { sq: "Rolf Løvland",     en: "Rolf Løvland" } },
+  { id: "ectMmQY2idw", work: "Pyete Hënën",               by: { sq: "piano",            en: "piano" } }
 ];
 
 const grid = document.getElementById("videoGrid");
@@ -24,7 +24,7 @@ function renderPlates(lang) {
     btn.className = "plate-frame";
     btn.type = "button";
     btn.style.backgroundImage = `url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)`;
-    btn.setAttribute("aria-label", `${lang === "en" ? "Play" : "Luaj"} — ${v.work}`);
+    btn.setAttribute("aria-label", `${lang === "en" ? "Play" : "Luaj"} ${v.work}`);
     btn.innerHTML = '<span class="play"></span>';
     btn.addEventListener("click", () => {
       const frame = document.createElement("iframe");
@@ -40,70 +40,55 @@ function renderPlates(lang) {
     const work = document.createElement("span");
     work.className = "work";
     work.textContent = v.work;
-    const leader = document.createElement("span");
-    leader.className = "leader";
-    leader.setAttribute("aria-hidden", "true");
-    const attrib = document.createElement("span");
-    attrib.className = "attrib";
-    attrib.textContent = v.attrib[lang] || v.attrib.sq;
-    cap.append(work, leader, attrib);
+    const by = document.createElement("span");
+    by.className = "by";
+    by.textContent = v.by[lang] || v.by.sq;
+    cap.append(work, by);
 
     plate.append(btn, cap);
     grid.append(plate);
   }
 }
 
-/* ---------- translation (Albanian is the markup default) ---------- */
+/* ---------- language (Albanian is the markup default) ---------- */
 const EN = {
   "skip": "Skip to content",
-  "nav.about": "Note", "nav.services": "Programme", "nav.videos": "Recordings",
+  "nav.about": "About", "nav.services": "Events", "nav.videos": "Recordings",
   "nav.repertoire": "Repertoire", "nav.book": "Book",
 
-  "hero.stamp": "Weddings &middot; Parties &middot; Events",
-  "hero.role": "Pianist",
-  "hero.note": "Live piano for your evening — from the Albanian songs every guest knows by heart to the pieces that fill the quiet between courses.",
+  "hero.role": "pianist",
+  "hero.note": "Live piano for weddings, parties and events. The Albanian songs every guest knows by heart, and the pieces that fill the quiet between courses.",
   "hero.cta1": "Check your date", "hero.cta2": "Hear a recording",
+  "hero.caption": "Obsesion, at a summer wedding",
   "film.on": "Sound on", "film.off": "Sound off",
 
-  "col.1t": "Formats", "col.1d": "Solo · with a singer · with a band",
-  "col.2t": "Repertoire", "col.2d": "Albanian &amp; international",
-  "col.3t": "Recordings", "col.3d": "33 on the official channel",
+  "note.title": "Every evening has its own rhythm. The programme is built around it.",
+  "note.p1": "I'm Jonuz Markaj, a pianist. I work with the songs people hold close — <em>Mora Fjalë</em>, <em>Obsesion</em>, <em>Ja Ku Jam</em>, <em>Martesa Jonë</em> — and bring them to the piano the way the moment asks: soft while dinner is served, full when the family gets up to dance.",
+  "note.p2": "Before I play, we talk through how the evening runs: the couple's entrance, the first dance, the moments that need music and the ones that need quiet. I don't arrive with a fixed set. I arrive with what suits your evening.",
+  "note.p3": "I play solo, with a singer, or with a band, depending on the format you choose.",
 
-  "about.label": "Programme note",
-  "about.title": "Every evening has its own rhythm. The programme is built around it.",
-  "about.p1": "I'm Jonuz Markaj, a pianist. I work with the songs people hold close — <em>Mora Fjalë</em>, <em>Obsesion</em>, <em>Ja Ku Jam</em>, <em>Martesa Jonë</em> — and bring them to the piano the way the moment asks: soft while dinner is served, full when the family gets up to dance.",
-  "about.p2": "Before I play, we talk through the flow: the couple's entrance, the first dance, the moments that need music and the ones that need quiet. I don't arrive with a fixed set — I arrive with what suits your evening.",
-  "about.aside.l": "From the channel",
-  "about.aside.q": "Over 30 recorded performances. Listen before you decide.",
+  "ev.title": "Where I play",
+  "ev.1.h": "Weddings",
+  "ev.1.p": "Ceremony, reception and dinner, usually two to four hours with breaks. We choose the bride's entrance and the first dance together; through dinner I play under the conversation, and once the family is on its feet we move to the Albanian songs the room knows.",
+  "ev.1.n": "An acoustic piano where there is one, otherwise digital with amplification.",
+  "ev.2.h": "Private parties",
+  "ev.2.p": "Birthdays, engagements, christenings. Sets of about forty-five minutes that lift the room slowly — guests stay at the table as long as they want to, and get up when the moment comes. I take their requests as the evening goes.",
+  "ev.2.n": "Works in small spaces too, at home or in a restaurant.",
+  "ev.3.h": "Corporate events",
+  "ev.3.p": "Receptions, award ceremonies, business dinners, venue openings. The volume sits under the conversation, not over it: the music should fill the room without making anyone raise their voice.",
+  "ev.3.n": "Written contract and invoice, formal dress.",
 
-  "svc.label": "The programme", "svc.title": "Three formats",
-  "svc.1.h": "Weddings", "svc.1.t": "Andante &mdash; 2–4 hrs",
-  "svc.1.p": "Ceremony, reception and dinner. The bride's entrance, the first dance, quiet music as guests arrive, and Albanian songs once the evening warms up.",
-  "svc.1.l1": "First dance chosen together with you",
-  "svc.1.l2": "Programme with planned breaks",
-  "svc.1.l3": "Acoustic or amplified digital piano",
-  "svc.2.h": "Private parties", "svc.2.t": "Allegretto &mdash; 45′ sets",
-  "svc.2.p": "Birthdays, engagements, christenings, family celebrations. An atmosphere that builds slowly, keeps guests at the table, then on their feet.",
-  "svc.2.l1": "Requests taken from your guests",
-  "svc.2.l2": "Flexible sets that follow the room",
-  "svc.2.l3": "Suited to smaller spaces",
-  "svc.3.h": "Corporate events", "svc.3.t": "Sotto voce &mdash; 1–3 hrs",
-  "svc.3.p": "Receptions, award ceremonies, business dinners, venue openings. Music that carries the conversation instead of covering it.",
-  "svc.3.l1": "Volume calibrated for conversation",
-  "svc.3.l2": "Discreet presence, formal dress",
-  "svc.3.l3": "Written contract and invoice",
+  "vid.title": "Recordings",
+  "vid.lede": "Six pieces from my channel. Click one to listen.",
+  "vid.more": "All recordings on YouTube",
 
-  "vid.label": "Recordings", "vid.title": "From the official channel",
-  "vid.lede": "Six selected pieces. Click to listen.",
-  "vid.more": "All videos on YouTube",
-
-  "rep.label": "Repertoire", "rep.title": "A sample of what I play",
-  "rep.lede": "Special requests are welcome — just give me time to prepare them.",
-  "rep.c1": "Part I &mdash; Albanian", "rep.c2": "Part II &mdash; International",
+  "rep.title": "Repertoire",
+  "rep.lede": "Some of what I play. Special requests are welcome, just give me time to prepare them.",
+  "rep.c1": "Albanian", "rep.c2": "International",
   "rep.trad": "traditional", "rep.wed": "for weddings",
   "rep.custom": "Requests on commission", "rep.ask": "by arrangement",
 
-  "ct.label": "Reply card", "ct.title": "Book a date",
+  "ct.title": "Book a date",
   "ct.lede": "Tell me the date, the venue and the kind of event. I reply within 48 hours with availability and a price.",
   "ct.phone": "Phone", "ct.email": "Email",
   "ct.f.name": "Name", "ct.f.contact": "Email or phone", "ct.f.date": "Event date",
@@ -114,7 +99,7 @@ const EN = {
 
 const SQ = {};
 document.querySelectorAll("[data-i18n]").forEach(el => { SQ[el.dataset.i18n] = el.innerHTML; });
-// The muted state is the only label the markup never renders, so seed it.
+// The muted state is the one label the markup never renders, so seed it.
 SQ["film.off"] = "Fik zërin";
 
 let current = "sq";
@@ -127,59 +112,25 @@ function setLang(lang) {
     if (val != null) el.innerHTML = val;
   });
   document.documentElement.lang = lang;
-  document.getElementById("langToggle").textContent = lang === "en" ? "SQ" : "EN";
+  document.getElementById("langToggle").textContent = lang === "en" ? "Shqip" : "English";
   renderPlates(lang);
   current = lang;
   try { localStorage.setItem("lang", lang); } catch (e) { /* private mode */ }
 }
 
 setLang(current);
-
 document.getElementById("langToggle").addEventListener("click", () => {
   setLang(current === "en" ? "sq" : "en");
 });
 
-/* ---------- reply card ---------- */
-const form = document.getElementById("bookForm");
-const note = document.getElementById("formNote");
+/* ---------- the film in the keyhole ----------
+   Autoplay is only permitted while muted, so it starts silent and the
+   visitor turns the sound on. Everything here is an enhancement: if it
+   never starts, the keyhole stays a quiet panel and the page is intact. */
+const FILM_ID = "06KV0G01k4E";   // Obsesion — Alban Skënderaj
+const FILM_START = 8;            // past the static opening frames
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const f = new FormData(form);
-  const en = current === "en";
-
-  if (!String(f.get("name") || "").trim() || !String(f.get("contact") || "").trim()) {
-    note.textContent = en
-      ? "Add your name and a way to reach you."
-      : "Shtoni emrin dhe një mënyrë kontakti.";
-    return;
-  }
-
-  const email = document.querySelector('[data-contact="email"]').textContent.trim();
-  const subject = `${f.get("type")} — ${f.get("date") || (en ? "date TBC" : "data pa caktuar")} — ${f.get("name")}`;
-  const body = [
-    `${en ? "Name" : "Emri"}: ${f.get("name")}`,
-    `${en ? "Contact" : "Kontakti"}: ${f.get("contact")}`,
-    `${en ? "Date" : "Data"}: ${f.get("date") || "—"}`,
-    `${en ? "Type" : "Lloji"}: ${f.get("type")}`,
-    `${en ? "Venue" : "Vendi"}: ${f.get("place") || "—"}`,
-    "",
-    f.get("message") || ""
-  ].join("\n");
-
-  window.location.href =
-    `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  note.textContent = en ? "Opening your email app…" : "Po hapet aplikacioni i email-it…";
-});
-
-/* ---------- film backdrop on the title page ----------
-   Browsers only permit autoplay when muted, so the film starts silent and
-   the visitor turns the sound on. It's an enhancement: if any of these
-   conditions fail, the paper title page simply stays as it is. */
-const FILM_ID = "06KV0G01k4E";       // Obsesion — Alban Skënderaj
-const FILM_START = 8;                 // skip the static opening frames
-
-const titlePage = document.getElementById("top");
+const keyhole = document.getElementById("keyhole");
 const soundBtn = document.getElementById("soundToggle");
 let player = null;
 
@@ -202,14 +153,10 @@ window.onYouTubeIframeAPIReady = () => {
       rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0
     },
     events: {
-      onReady: e => {
-        e.target.mute();
-        e.target.playVideo();
-      },
+      onReady: e => { e.target.mute(); e.target.playVideo(); },
       onStateChange: e => {
-        // Only dress the title page once frames are actually on screen.
         if (e.data === YT.PlayerState.PLAYING) {
-          titlePage.classList.add("filmed");
+          keyhole.classList.add("playing");
           soundBtn.hidden = false;
         }
       }
@@ -219,8 +166,8 @@ window.onYouTubeIframeAPIReady = () => {
 
 soundBtn.addEventListener("click", () => {
   if (!player) return;
-  const on = soundBtn.getAttribute("aria-pressed") === "true";
-  if (on) {
+  const wasOn = soundBtn.getAttribute("aria-pressed") === "true";
+  if (wasOn) {
     player.mute();
     soundBtn.setAttribute("aria-pressed", "false");
   } else {
@@ -229,12 +176,12 @@ soundBtn.addEventListener("click", () => {
     soundBtn.setAttribute("aria-pressed", "true");
   }
   const label = soundBtn.querySelector(".sound-label");
-  const key = on ? "film.on" : "film.off";
+  const key = wasOn ? "film.on" : "film.off";
   label.dataset.i18n = key;
   label.innerHTML = current === "en" ? EN[key] : SQ[key];
 });
 
-// Don't keep the film running once it's scrolled past.
+// Stop the film once it has scrolled out of sight.
 if ("IntersectionObserver" in window) {
   new IntersectionObserver(entries => {
     if (!player || typeof player.pauseVideo !== "function") return;
@@ -242,13 +189,7 @@ if ("IntersectionObserver" in window) {
       if (en.isIntersecting) player.playVideo();
       else player.pauseVideo();
     }
-  }, { threshold: 0.15 }).observe(titlePage);
+  }, { threshold: 0.2 }).observe(keyhole);
 }
 
-/* ---------- small touches ---------- */
 document.getElementById("year").textContent = new Date().getFullYear();
-
-const masthead = document.getElementById("masthead");
-addEventListener("scroll", () => {
-  masthead.classList.toggle("scrolled", scrollY > 8);
-}, { passive: true });
