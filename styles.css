@@ -133,9 +133,75 @@ h3{font-size:clamp(1.25rem,2vw,1.55rem)}
 
 /* ---------- title page ---------- */
 .title-page{
+  position:relative;
   max-width:var(--sheet);margin:0 auto;
   padding:clamp(3rem,7vw,5.5rem) var(--gutter) clamp(3rem,6vw,4.5rem);
   text-align:center;
+}
+
+/* ---------- film backdrop ---------- */
+/* Only applied once the player is actually running (.filmed), so the
+   paper title page stands on its own if the video never loads. */
+.film{
+  position:absolute;inset:0;z-index:0;overflow:hidden;
+  background:#100b09;
+  opacity:0;transition:opacity 1.4s ease;
+  pointer-events:none;
+}
+.title-page.filmed{
+  --ink:#f5f0e5;
+  --ink-2:#dbd2c1;
+  --mute:#b4a894;
+  --wine:#d97f89;
+  --wine-ink:#1b0e11;
+  --brass:#dcb872;
+  --rule:rgba(245,240,229,.38);
+  --rule-soft:rgba(245,240,229,.2);
+  --paper:#100b09;
+  overflow:hidden;
+  /* `color` inherits as a computed value, so children would keep body's
+     dark ink unless it is re-resolved from the tokens here. */
+  color:var(--ink);
+}
+.title-page.filmed .film{opacity:1}
+/* .sound is positioned on its own — don't clobber it back to relative. */
+.title-page.filmed > *:not(.film):not(.sound){position:relative;z-index:1}
+.film iframe{
+  position:absolute;top:50%;left:50%;
+  width:100vw;height:56.25vw;
+  min-width:177.78vh;min-height:100%;
+  transform:translate(-50%,-50%);
+  border:0;pointer-events:none;
+}
+/* scrim: dark enough for engraved type, light enough to read as film */
+.film::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(16,11,9,.88) 0%,rgba(16,11,9,.74) 45%,rgba(16,11,9,.92) 100%),
+    radial-gradient(120% 90% at 50% 45%,rgba(16,11,9,.45) 0%,rgba(16,11,9,.78) 100%);
+}
+
+.sound[hidden]{display:none}
+.sound{
+  position:absolute;right:var(--gutter);top:clamp(1rem,3vw,2rem);z-index:2;
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;
+  color:var(--ink-2);background:rgba(16,11,9,.45);
+  border:1px solid var(--rule);padding:.42rem .8rem;cursor:pointer;
+  backdrop-filter:blur(4px);
+  transition:color .2s,border-color .2s;
+}
+.sound:hover{color:var(--ink);border-color:var(--brass)}
+.sound-icon{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--wine);flex:none;
+  box-shadow:0 0 0 0 color-mix(in srgb,var(--wine) 70%,transparent);
+}
+.sound[aria-pressed="true"] .sound-icon{animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--wine) 65%,transparent)}
+  70%{box-shadow:0 0 0 9px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
 }
 .stamp{
   font-family:var(--label);text-transform:uppercase;letter-spacing:.3em;
@@ -353,4 +419,11 @@ a.attrib:hover{border-bottom-color:currentColor}
 
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* The film is an enhancement: never on small screens (data cost, and the
+   16:9 crop leaves nothing readable at phone width) and never when the
+   visitor has asked for reduced motion. JS checks the same conditions. */
+@media (max-width:719px),(prefers-reduced-motion:reduce){
+  .film,.sound{display:none}
 }

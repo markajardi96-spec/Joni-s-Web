@@ -36,6 +36,13 @@
 
   <!-- ============ TITLE PAGE ============ -->
   <section class="title-page" id="top">
+    <div class="film" id="film" aria-hidden="true"><div id="filmPlayer"></div></div>
+
+    <button class="sound" id="soundToggle" type="button" aria-pressed="false" hidden>
+      <span class="sound-icon" aria-hidden="true"></span>
+      <span class="sound-label" data-i18n="film.on">Ndiz zërin</span>
+    </button>
+
     <p class="stamp" data-i18n="hero.stamp">Dasma &middot; Festa &middot; Evenimente</p>
 
     <div class="rule-pair">
@@ -263,6 +270,7 @@
   <a href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">YouTube</a>
 </footer>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="script.js"></script>
 </body>
 </html>

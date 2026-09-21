@@ -63,6 +63,7 @@ const EN = {
   "hero.role": "Pianist",
   "hero.note": "Live piano for your evening — from the Albanian songs every guest knows by heart to the pieces that fill the quiet between courses.",
   "hero.cta1": "Check your date", "hero.cta2": "Hear a recording",
+  "film.on": "Sound on", "film.off": "Sound off",
 
   "col.1t": "Formats", "col.1d": "Solo · with a singer · with a band",
   "col.2t": "Repertoire", "col.2d": "Albanian &amp; international",
@@ -113,6 +114,8 @@ const EN = {
 
 const SQ = {};
 document.querySelectorAll("[data-i18n]").forEach(el => { SQ[el.dataset.i18n] = el.innerHTML; });
+// The muted state is the only label the markup never renders, so seed it.
+SQ["film.off"] = "Fik zërin";
 
 let current = "sq";
 try { current = localStorage.getItem("lang") === "en" ? "en" : "sq"; } catch (e) { /* private mode */ }
@@ -168,6 +171,79 @@ form.addEventListener("submit", e => {
     `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   note.textContent = en ? "Opening your email app…" : "Po hapet aplikacioni i email-it…";
 });
+
+/* ---------- film backdrop on the title page ----------
+   Browsers only permit autoplay when muted, so the film starts silent and
+   the visitor turns the sound on. It's an enhancement: if any of these
+   conditions fail, the paper title page simply stays as it is. */
+const FILM_ID = "06KV0G01k4E";       // Obsesion — Alban Skënderaj
+const FILM_START = 8;                 // skip the static opening frames
+
+const titlePage = document.getElementById("top");
+const soundBtn = document.getElementById("soundToggle");
+let player = null;
+
+function filmAllowed() {
+  if (innerWidth < 720) return false;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return false;
+  return true;
+}
+
+window.onYouTubeIframeAPIReady = () => {
+  if (!filmAllowed() || !window.YT) return;
+
+  player = new YT.Player("filmPlayer", {
+    videoId: FILM_ID,
+    playerVars: {
+      autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: FILM_ID,
+      start: FILM_START, playsinline: 1, modestbranding: 1,
+      rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0
+    },
+    events: {
+      onReady: e => {
+        e.target.mute();
+        e.target.playVideo();
+      },
+      onStateChange: e => {
+        // Only dress the title page once frames are actually on screen.
+        if (e.data === YT.PlayerState.PLAYING) {
+          titlePage.classList.add("filmed");
+          soundBtn.hidden = false;
+        }
+      }
+    }
+  });
+};
+
+soundBtn.addEventListener("click", () => {
+  if (!player) return;
+  const on = soundBtn.getAttribute("aria-pressed") === "true";
+  if (on) {
+    player.mute();
+    soundBtn.setAttribute("aria-pressed", "false");
+  } else {
+    player.unMute();
+    player.setVolume(60);
+    soundBtn.setAttribute("aria-pressed", "true");
+  }
+  const label = soundBtn.querySelector(".sound-label");
+  const key = on ? "film.on" : "film.off";
+  label.dataset.i18n = key;
+  label.innerHTML = current === "en" ? EN[key] : SQ[key];
+});
+
+// Don't keep the film running once it's scrolled past.
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(entries => {
+    if (!player || typeof player.pauseVideo !== "function") return;
+    for (const en of entries) {
+      if (en.isIntersecting) player.playVideo();
+      else player.pauseVideo();
+    }
+  }, { threshold: 0.15 }).observe(titlePage);
+}
 
 /* ---------- small touches ---------- */
 document.getElementById("year").textContent = new Date().getFullYear();
