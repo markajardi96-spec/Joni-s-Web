@@ -63,15 +63,17 @@ const soundBtn = document.getElementById('soundToggle');
 let player = null;
 
 function filmAllowed() {
-  if (window.innerWidth < 720) return false;
+  // Plays at every screen size. Still skipped for visitors who asked for
+  // reduced motion, or who are on save-data or a 2g connection — there the
+  // still carries the section instead.
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
   const conn = navigator.connection;
   if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) return false;
   return true;
 }
 
-window.onYouTubeIframeAPIReady = () => {
-  if (!filmAllowed() || !window.YT) return;
+function startFilm() {
+  if (player || !window.YT || !window.YT.Player) return;
 
   player = new window.YT.Player('filmPlayer', {
     videoId: film.id,
@@ -81,16 +83,41 @@ window.onYouTubeIframeAPIReady = () => {
       rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0,
     },
     events: {
-      onReady: (e) => { e.target.mute(); e.target.playVideo(); },
-      onStateChange: (e) => {
-        if (e.data === window.YT.PlayerState.PLAYING) {
-          opening.classList.add('playing');
-          soundBtn.hidden = false;
-        }
+      onReady: (e) => {
+        e.target.mute();
+        e.target.playVideo();
+        // Reveal on ready rather than on PLAYING: if a browser refuses the
+        // autoplay, its first frame is the same image as the still, so the
+        // section looks right either way.
+        opening.classList.add('playing');
+        // Shown as soon as the player exists, so that where autoplay was
+        // refused (iOS low-power mode, strict autoplay settings) this button
+        // is how the visitor starts it.
+        soundBtn.hidden = false;
       },
     },
   });
-};
+}
+
+/* Register the callback, then pull in the API. Doing it in this order
+   means the API can never fire "ready" before we are listening for it —
+   and if another copy of the API is already loaded, start straight away. */
+function loadFilm() {
+  if (!filmAllowed()) return;
+
+  window.onYouTubeIframeAPIReady = startFilm;
+
+  if (window.YT && window.YT.Player) {
+    startFilm();
+    return;
+  }
+  if (!document.querySelector('script[data-yt-api]')) {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    tag.dataset.ytApi = '';
+    document.head.append(tag);
+  }
+}
 
 soundBtn.addEventListener('click', () => {
   if (!player) return;
@@ -102,6 +129,11 @@ soundBtn.addEventListener('click', () => {
   } else {
     player.unMute();
     player.setVolume(60);
+    // The click is a user gesture, so it also covers the case where the
+    // browser refused to start the film on its own.
+    if (player.getPlayerState && player.getPlayerState() !== window.YT.PlayerState.PLAYING) {
+      player.playVideo();
+    }
     soundBtn.setAttribute('aria-pressed', 'true');
   }
 
@@ -128,3 +160,4 @@ setLang(current);
 document.getElementById('langToggle').addEventListener('click', () => {
   setLang(current === 'en' ? 'sq' : 'en');
 });
+loadFilm();

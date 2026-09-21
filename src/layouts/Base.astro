@@ -33,8 +33,9 @@ const asset = (path) =>
   <a class="skip" href="#main" data-i18n="skip">{sq['skip']}</a>
   <slot />
 
-  <!-- Loaded as-is: the YouTube API expects to be a plain global script. -->
-  <script is:inline src="https://www.youtube.com/iframe_api"></script>
+  {/* site.js loads the YouTube API itself, after registering the ready
+      callback — a plain script tag here races the bundled module and the
+      API only fires that callback once. */}
   <script>
     import '../scripts/site.js';
   </script>

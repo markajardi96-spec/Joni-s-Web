@@ -345,7 +345,7 @@ h1,h2,h3{
 }
 
 /* The film is an enhancement — never on phones, never under reduced motion. */
-@media (max-width:719px),(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce){
   .sound{display:none}
 }
 @media (prefers-reduced-motion:reduce){
