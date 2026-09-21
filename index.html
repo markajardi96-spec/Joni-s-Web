@@ -3,194 +3,264 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jonuz Markaj — Pianist</title>
+<title>Jonuz Markaj</title>
 <meta name="description" content="Jonuz Markaj — pianist për dasma, festa dhe evenimente korporative. Muzikë live në piano, shqip dhe ndërkombëtare.">
+<meta name="theme-color" content="#f0ebe1">
 <meta property="og:title" content="Jonuz Markaj — Pianist">
 <meta property="og:description" content="Muzikë live në piano për dasma, festa dhe evenimente korporative.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <a class="brand" href="#top">Jonuz&nbsp;Markaj</a>
-  <nav class="nav-links">
-    <a href="#about" data-i18n="nav.about">Rreth meje</a>
-    <a href="#services" data-i18n="nav.services">Evenimente</a>
-    <a href="#videos" data-i18n="nav.videos">Video</a>
+<a class="skip" href="#main" data-i18n="skip">Kalo te përmbajtja</a>
+
+<header class="masthead" id="masthead">
+  <a class="masthead-name" href="#top">Jonuz Markaj</a>
+  <nav class="masthead-nav">
+    <a href="#about" data-i18n="nav.about">Shënim</a>
+    <a href="#programme" data-i18n="nav.services">Programi</a>
+    <a href="#plates" data-i18n="nav.videos">Regjistrime</a>
     <a href="#repertoire" data-i18n="nav.repertoire">Repertori</a>
-    <a href="#contact" class="nav-cta" data-i18n="nav.book">Rezervo</a>
   </nav>
-  <button class="lang" id="langToggle" type="button" aria-label="Change language">EN</button>
+  <div class="masthead-side">
+    <a class="masthead-cta" href="#contact" data-i18n="nav.book">Rezervo</a>
+    <button class="lang" id="langToggle" type="button" aria-label="Change language">EN</button>
+  </div>
 </header>
 
-<main id="top">
+<main id="main">
 
-  <section class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow" data-i18n="hero.eyebrow">Pianist &middot; Muzikë live</p>
-      <h1 data-i18n="hero.title">Muzikë që e mban mend dhoma edhe pasi hesht piano</h1>
-      <p class="lede" data-i18n="hero.lede">Piano live për dasma, festa familjare dhe evenimente korporative — nga këngët shqipe që i di përmendsh çdo i ftuar, te klasikët që mbushin heshtjen mes shërbimeve.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact" data-i18n="hero.cta1">Kontrollo datën tënde</a>
-        <a class="btn btn-ghost" href="#videos" data-i18n="hero.cta2">Dëgjo performancat</a>
+  <!-- ============ TITLE PAGE ============ -->
+  <section class="title-page" id="top">
+    <p class="stamp" data-i18n="hero.stamp">Dasma &middot; Festa &middot; Evenimente</p>
+
+    <div class="rule-pair">
+      <span class="rule"></span>
+      <span class="ornament" aria-hidden="true">&#9834;</span>
+      <span class="rule"></span>
+    </div>
+
+    <h1 class="engraved">Jonuz<br>Markaj</h1>
+    <p class="role" data-i18n="hero.role">Pianist</p>
+
+    <div class="rule-pair">
+      <span class="rule"></span>
+      <span class="ornament" aria-hidden="true">&#9834;</span>
+      <span class="rule"></span>
+    </div>
+
+    <p class="title-note" data-i18n="hero.note">Piano live për mbrëmjen tuaj — nga këngët shqipe që i di përmendsh çdo i ftuar, te pjesët që mbushin heshtjen mes shërbimeve.</p>
+
+    <div class="title-actions">
+      <a class="btn btn-solid" href="#contact" data-i18n="hero.cta1">Kontrollo datën</a>
+      <a class="btn btn-line" href="#plates" data-i18n="hero.cta2">Dëgjo një regjistrim</a>
+    </div>
+
+    <dl class="colophon">
+      <div>
+        <dt data-i18n="col.1t">Formate</dt>
+        <dd data-i18n="col.1d">Solo · me këngëtar · me grup</dd>
       </div>
-      <ul class="hero-facts">
-        <li><strong>33</strong><span data-i18n="hero.fact1">performanca të regjistruara</span></li>
-        <li><strong data-i18n="hero.fact2n">Shqip &amp; ndërkombëtare</strong><span data-i18n="hero.fact2">repertor i dyfishtë</span></li>
-        <li><strong data-i18n="hero.fact3n">Solo ose me grup</strong><span data-i18n="hero.fact3">sipas formatit të mbrëmjes</span></li>
-      </ul>
+      <div>
+        <dt data-i18n="col.2t">Repertor</dt>
+        <dd data-i18n="col.2d">Shqip &amp; ndërkombëtar</dd>
+      </div>
+      <div>
+        <dt data-i18n="col.3t">Regjistrime</dt>
+        <dd data-i18n="col.3d">33 në kanalin zyrtar</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- ============ PROGRAMME NOTE ============ -->
+  <section class="sheet" id="about">
+    <p class="movement" data-i18n="about.label">Shënim programi</p>
+    <div class="note-grid">
+      <div class="note-body">
+        <h2 data-i18n="about.title">Mbrëmja ka ritmin e vet. Programi ndërtohet rreth saj.</h2>
+        <p data-i18n="about.p1">Jam Jonuz Markaj, pianist. Punoj me këngë që njerëzit i mbajnë afër — <em>Mora Fjalë</em>, <em>Obsesion</em>, <em>Ja Ku Jam</em>, <em>Martesa Jonë</em> — dhe i sjell në piano ashtu si e kërkon momenti: të buta kur po shërbehet darka, të plota kur familja ngrihet për të kërcyer.</p>
+        <p data-i18n="about.p2">Para se të luaj, flasim për rrjedhën: hyrja e çiftit, vallëzimi i parë, momentet që kërkojnë muzikë dhe ato që kërkojnë qetësi. Nuk vij me një listë të gatshme — vij me atë që i shkon mbrëmjes suaj.</p>
+      </div>
+      <aside class="marginalia">
+        <p class="movement" data-i18n="about.aside.l">Nga kanali</p>
+        <p class="pull" data-i18n="about.aside.q">Mbi 30 performanca të regjistruara. Dëgjoni përpara se të vendosni.</p>
+        <a class="link-arrow" href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">@JonuzMarkaj-d1w</a>
+      </aside>
     </div>
   </section>
 
-  <section id="about" class="section about">
-    <div class="split">
-      <div class="split-media" aria-hidden="true">
-        <div class="keys">
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <!-- ============ PROGRAMME ============ -->
+  <section class="sheet" id="programme">
+    <p class="movement" data-i18n="svc.label">Programi</p>
+    <h2 class="sheet-title" data-i18n="svc.title">Tri formate</h2>
+
+    <ul class="programme">
+      <li class="entry">
+        <div class="entry-head">
+          <h3 data-i18n="svc.1.h">Dasma</h3>
+          <span class="leader" aria-hidden="true"></span>
+          <span class="tempo" data-i18n="svc.1.t">Andante &mdash; 2–4 orë</span>
         </div>
-      </div>
-      <div class="split-text">
-        <h2 data-i18n="about.title">Rreth meje</h2>
-        <p data-i18n="about.p1">Jam Jonuz Markaj, pianist. Punoj me këngë që njerëzit i mbajnë afër — <em>Mora Fjalë</em>, <em>Obsesion</em>, <em>Ja Ku Jam</em>, <em>Martesa Jonë</em> — dhe i sjell ato në piano ashtu si i kërkon momenti: të buta kur po hahet darka, të plota kur familja ngrihet për të kërcyer.</p>
-        <p data-i18n="about.p2">Çdo event ka ritmin e vet. Para se të luaj, flasim për rrjedhën e mbrëmjes: hyrjen e çiftit, valsin e parë, momentet kur duhet muzikë dhe momentet kur duhet qetësi. Programi ndërtohet rreth jush, jo anasjelltas.</p>
-        <p class="quiet" data-i18n="about.p3">Kanali im zyrtar në YouTube mbledh mbi 30 performanca — dëgjoni para se të vendosni.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="section">
-    <h2 class="section-title" data-i18n="svc.title">Evenimente</h2>
-    <p class="section-lede" data-i18n="svc.lede">Tri formate, secili i menduar për një lloj mbrëmjeje të ndryshme.</p>
-    <div class="cards">
-      <article class="card">
-        <h3 data-i18n="svc.1.h">Dasma</h3>
-        <p data-i18n="svc.1.p">Ceremoni, pritje dhe darkë. Hyrja e nuses, vallëzimi i parë, muzikë e qetë gjatë pritjes së të ftuarve dhe këngë shqipe kur mbrëmja nxehet.</p>
-        <ul>
-          <li data-i18n="svc.1.l1">Vallëzimi i parë i zgjedhur bashkë me ju</li>
-          <li data-i18n="svc.1.l2">Program 2–4 orë, me pushime</li>
+        <p data-i18n="svc.1.p">Ceremoni, pritje dhe darkë. Hyrja e nuses, vallëzimi i parë, muzikë e qetë sa mbërrijnë të ftuarit, dhe këngë shqipe kur mbrëmja nxehet.</p>
+        <ul class="detail">
+          <li data-i18n="svc.1.l1">Vallëzimi i parë zgjidhet bashkë me ju</li>
+          <li data-i18n="svc.1.l2">Program me pushime të planifikuara</li>
           <li data-i18n="svc.1.l3">Piano akustike ose digjitale me amplifikim</li>
         </ul>
-      </article>
-      <article class="card">
-        <h3 data-i18n="svc.2.h">Festa private</h3>
-        <p data-i18n="svc.2.p">Ditëlindje, fejesa, pagëzime, festa familjare. Atmosferë që ngrihet ngadalë dhe i mban të ftuarit në tryezë e pastaj në këmbë.</p>
-        <ul>
+      </li>
+
+      <li class="entry">
+        <div class="entry-head">
+          <h3 data-i18n="svc.2.h">Festa private</h3>
+          <span class="leader" aria-hidden="true"></span>
+          <span class="tempo" data-i18n="svc.2.t">Allegretto &mdash; set 45′</span>
+        </div>
+        <p data-i18n="svc.2.p">Ditëlindje, fejesa, pagëzime, festa familjare. Atmosferë që ngrihet ngadalë, i mban të ftuarit në tryezë dhe pastaj në këmbë.</p>
+        <ul class="detail">
           <li data-i18n="svc.2.l1">Kërkesa të veçanta nga të ftuarit</li>
-          <li data-i18n="svc.2.l2">Set-e 45-minutëshe fleksibël</li>
+          <li data-i18n="svc.2.l2">Set-e fleksibël sipas rrjedhës</li>
           <li data-i18n="svc.2.l3">I përshtatshëm për ambiente të vogla</li>
         </ul>
-      </article>
-      <article class="card">
-        <h3 data-i18n="svc.3.h">Evenimente korporative</h3>
-        <p data-i18n="svc.3.p">Pritje, ceremoni çmimesh, darka biznesi, hapje ambientesh. Muzikë që plotëson bisedën pa e mbuluar atë.</p>
-        <ul>
+      </li>
+
+      <li class="entry">
+        <div class="entry-head">
+          <h3 data-i18n="svc.3.h">Evenimente korporative</h3>
+          <span class="leader" aria-hidden="true"></span>
+          <span class="tempo" data-i18n="svc.3.t">Sotto voce &mdash; 1–3 orë</span>
+        </div>
+        <p data-i18n="svc.3.p">Pritje, ceremoni çmimesh, darka biznesi, hapje ambientesh. Muzikë që e mban bisedën, nuk e mbulon.</p>
+        <ul class="detail">
           <li data-i18n="svc.3.l1">Volum i kalibruar për bisedë</li>
           <li data-i18n="svc.3.l2">Prezencë diskrete, veshje formale</li>
-          <li data-i18n="svc.3.l3">Faturë dhe kontratë me shkrim</li>
+          <li data-i18n="svc.3.l3">Kontratë dhe faturë me shkrim</li>
         </ul>
-      </article>
-    </div>
+      </li>
+    </ul>
   </section>
 
-  <section id="videos" class="section videos">
-    <h2 class="section-title" data-i18n="vid.title">Performanca</h2>
-    <p class="section-lede" data-i18n="vid.lede">Regjistrime nga kanali zyrtar. Klikoni për të dëgjuar.</p>
-    <div class="video-grid" id="videoGrid"></div>
+  <!-- ============ PLATES ============ -->
+  <section class="sheet plates" id="plates">
+    <p class="movement" data-i18n="vid.label">Regjistrime</p>
+    <h2 class="sheet-title" data-i18n="vid.title">Nga kanali zyrtar</h2>
+    <p class="sheet-lede" data-i18n="vid.lede">Gjashtë pjesë të zgjedhura. Klikoni për të dëgjuar.</p>
+    <div class="plate-grid" id="videoGrid"></div>
     <p class="center">
-      <a class="btn btn-ghost" href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener" data-i18n="vid.more">Të gjitha videot në YouTube</a>
+      <a class="btn btn-line" href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener" data-i18n="vid.more">Të gjitha në YouTube</a>
     </p>
   </section>
 
-  <section id="repertoire" class="section">
-    <h2 class="section-title" data-i18n="rep.title">Repertori</h2>
-    <p class="section-lede" data-i18n="rep.lede">Një pjesë e asaj që luaj. Kërkesat e veçanta janë të mirëpritura — më jepni kohë t'i përgatis.</p>
+  <!-- ============ REPERTOIRE ============ -->
+  <section class="sheet" id="repertoire">
+    <p class="movement" data-i18n="rep.label">Repertori</p>
+    <h2 class="sheet-title" data-i18n="rep.title">Një pjesë e asaj që luaj</h2>
+    <p class="sheet-lede" data-i18n="rep.lede">Kërkesat e veçanta janë të mirëpritura — më jepni kohë t'i përgatis.</p>
+
     <div class="rep-cols">
       <div>
-        <h3 data-i18n="rep.c1">Shqip</h3>
-        <ul class="rep-list">
-          <li>Mora Fjalë</li>
-          <li>Obsesion <span>— Alban Skënderaj</span></li>
-          <li>Ja Ku Jam <span>— Ardit Gjebrea</span></li>
-          <li>Martesa Jonë</li>
-          <li>Pyete Hënën</li>
-          <li>Xhevahirin e Dashurisë</li>
-          <li>Mësuesi i Parë</li>
+        <p class="movement" data-i18n="rep.c1">Pjesa I &mdash; Shqip</p>
+        <ul class="listing">
+          <li><span class="work">Mora Fjalë</span><span class="leader" aria-hidden="true"></span><span class="attrib" data-i18n="rep.trad">tradicionale</span></li>
+          <li><span class="work">Obsesion</span><span class="leader" aria-hidden="true"></span><span class="attrib">Alban Skënderaj</span></li>
+          <li><span class="work">Ja Ku Jam</span><span class="leader" aria-hidden="true"></span><span class="attrib">Ardit Gjebrea</span></li>
+          <li><span class="work">Martesa Jonë</span><span class="leader" aria-hidden="true"></span><span class="attrib" data-i18n="rep.wed">për dasma</span></li>
+          <li><span class="work">Pyete Hënën</span><span class="leader" aria-hidden="true"></span><span class="attrib">&mdash;</span></li>
+          <li><span class="work">Xhevahirin e Dashurisë</span><span class="leader" aria-hidden="true"></span><span class="attrib">Nexhat &amp; Remzie Osmani</span></li>
+          <li><span class="work">Mësuesi i Parë</span><span class="leader" aria-hidden="true"></span><span class="attrib">&mdash;</span></li>
         </ul>
       </div>
       <div>
-        <h3 data-i18n="rep.c2">Ndërkombëtare &amp; klasike</h3>
-        <ul class="rep-list">
-          <li>Song from a Secret Garden</li>
-          <li>Clair de Lune <span>— Debussy</span></li>
-          <li>Nocturne op. 9 nr. 2 <span>— Chopin</span></li>
-          <li>Comptine d'un autre été <span>— Yann Tiersen</span></li>
-          <li>River Flows in You <span>— Yiruma</span></li>
-          <li data-i18n="rep.custom">Kërkesa me porosi</li>
+        <p class="movement" data-i18n="rep.c2">Pjesa II &mdash; Ndërkombëtare</p>
+        <ul class="listing">
+          <li><span class="work">Song from a Secret Garden</span><span class="leader" aria-hidden="true"></span><span class="attrib">Rolf Løvland</span></li>
+          <li><span class="work">Clair de Lune</span><span class="leader" aria-hidden="true"></span><span class="attrib">Debussy</span></li>
+          <li><span class="work">Nocturne op. 9 nr. 2</span><span class="leader" aria-hidden="true"></span><span class="attrib">Chopin</span></li>
+          <li><span class="work">Comptine d'un autre été</span><span class="leader" aria-hidden="true"></span><span class="attrib">Yann Tiersen</span></li>
+          <li><span class="work">River Flows in You</span><span class="leader" aria-hidden="true"></span><span class="attrib">Yiruma</span></li>
+          <li><span class="work" data-i18n="rep.custom">Kërkesa me porosi</span><span class="leader" aria-hidden="true"></span><span class="attrib" data-i18n="rep.ask">me marrëveshje</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="section contact">
-    <div class="contact-inner">
-      <div>
-        <h2 data-i18n="ct.title">Rezervo një datë</h2>
-        <p data-i18n="ct.lede">Më tregoni datën, vendin dhe llojin e eventit. Ju përgjigjem brenda 48 orëve me disponueshmërinë dhe çmimin.</p>
-        <ul class="contact-direct">
-          <li><span data-i18n="ct.phone">Telefon</span><a href="tel:+000000000" data-contact="phone">+___ ___ ____</a></li>
-          <li><span data-i18n="ct.email">Email</span><a href="mailto:hello@example.com" data-contact="email">hello@example.com</a></li>
-          <li><span>YouTube</span><a href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">@JonuzMarkaj-d1w</a></li>
-        </ul>
+  <!-- ============ REPLY CARD ============ -->
+  <section class="sheet reply" id="contact">
+    <div class="reply-card">
+      <p class="movement" data-i18n="ct.label">Kartë kthimi</p>
+      <div class="reply-grid">
+        <div class="reply-text">
+          <h2 data-i18n="ct.title">Rezervo një datë</h2>
+          <p data-i18n="ct.lede">Më tregoni datën, vendin dhe llojin e eventit. Përgjigjem brenda 48 orëve me disponueshmërinë dhe çmimin.</p>
+          <ul class="listing direct">
+            <li>
+              <span class="work" data-i18n="ct.phone">Telefon</span>
+              <span class="leader" aria-hidden="true"></span>
+              <a class="attrib" href="tel:+000000000" data-contact="phone">+___ ___ ____</a>
+            </li>
+            <li>
+              <span class="work" data-i18n="ct.email">Email</span>
+              <span class="leader" aria-hidden="true"></span>
+              <a class="attrib" href="mailto:hello@example.com" data-contact="email">hello@example.com</a>
+            </li>
+            <li>
+              <span class="work">YouTube</span>
+              <span class="leader" aria-hidden="true"></span>
+              <a class="attrib" href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">@JonuzMarkaj-d1w</a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="form" id="bookForm" novalidate>
+          <div class="row">
+            <label for="f-name">
+              <span data-i18n="ct.f.name">Emri</span>
+              <input id="f-name" type="text" name="name" autocomplete="name" required>
+            </label>
+            <label for="f-contact">
+              <span data-i18n="ct.f.contact">Email ose telefon</span>
+              <input id="f-contact" type="text" name="contact" required>
+            </label>
+          </div>
+          <div class="row">
+            <label for="f-date">
+              <span data-i18n="ct.f.date">Data e eventit</span>
+              <input id="f-date" type="date" name="date">
+            </label>
+            <label for="f-type">
+              <span data-i18n="ct.f.type">Lloji</span>
+              <select id="f-type" name="type">
+                <option data-i18n="ct.f.t1">Dasmë</option>
+                <option data-i18n="ct.f.t2">Festë private</option>
+                <option data-i18n="ct.f.t3">Event korporativ</option>
+                <option data-i18n="ct.f.t4">Tjetër</option>
+              </select>
+            </label>
+          </div>
+          <label for="f-place">
+            <span data-i18n="ct.f.place">Vendi</span>
+            <input id="f-place" type="text" name="place">
+          </label>
+          <label for="f-msg">
+            <span data-i18n="ct.f.msg">Detaje</span>
+            <textarea id="f-msg" name="message" rows="3"></textarea>
+          </label>
+          <button class="btn btn-solid" type="submit" data-i18n="ct.f.send">Dërgo kërkesën</button>
+          <p class="form-note" id="formNote" role="status"></p>
+        </form>
       </div>
-      <form class="form" id="bookForm" novalidate>
-        <div class="row">
-          <label>
-            <span data-i18n="ct.f.name">Emri</span>
-            <input type="text" name="name" required>
-          </label>
-          <label>
-            <span data-i18n="ct.f.contact">Email ose telefon</span>
-            <input type="text" name="contact" required>
-          </label>
-        </div>
-        <div class="row">
-          <label>
-            <span data-i18n="ct.f.date">Data e eventit</span>
-            <input type="date" name="date">
-          </label>
-          <label>
-            <span data-i18n="ct.f.type">Lloji</span>
-            <select name="type">
-              <option data-i18n="ct.f.t1">Dasmë</option>
-              <option data-i18n="ct.f.t2">Festë private</option>
-              <option data-i18n="ct.f.t3">Event korporativ</option>
-              <option data-i18n="ct.f.t4">Tjetër</option>
-            </select>
-          </label>
-        </div>
-        <label>
-          <span data-i18n="ct.f.place">Vendi</span>
-          <input type="text" name="place">
-        </label>
-        <label>
-          <span data-i18n="ct.f.msg">Detaje</span>
-          <textarea name="message" rows="4"></textarea>
-        </label>
-        <button class="btn btn-primary" type="submit" data-i18n="ct.f.send">Dërgo kërkesën</button>
-        <p class="form-note" id="formNote" role="status"></p>
-      </form>
     </div>
   </section>
 
 </main>
 
 <footer class="footer">
-  <p>&copy; <span id="year"></span> Jonuz Markaj</p>
-  <p><a href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">YouTube</a></p>
+  <span>&copy; <span id="year"></span> Jonuz Markaj</span>
+  <span class="ornament" aria-hidden="true">&#9834;</span>
+  <a href="https://www.youtube.com/@JonuzMarkaj-d1w" target="_blank" rel="noopener">YouTube</a>
 </footer>
 
 <script src="script.js"></script>
