@@ -1,13 +1,35 @@
 ---
-import { sq } from '../data/content.js';
+import { sq, videos } from '../data/content.js';
+
+const stats = [1, 2, 3, 4];
+
+// The film's own first frame doubles as the poster, so the section is
+// already lit before the player exists — or if it never does.
+const poster = `https://i.ytimg.com/vi/${videos[1].id}/maxresdefault.jpg`;
 ---
 <section class="opening" id="top">
-  <div class="film" id="film" aria-hidden="true"><div id="filmPlayer"></div></div>
+  <div class="film" id="film" aria-hidden="true" style={`background-image:url(${poster})`}>
+    <div id="filmPlayer"></div>
+  </div>
 
-  <button class="sound" id="soundToggle" type="button" aria-pressed="false" hidden>
-    <span class="sound-icon" aria-hidden="true"></span>
-    <span class="sound-label" data-i18n="film.on">{sq['film.on']}</span>
-  </button>
+  <div class="film-controls">
+    <button class="film-btn" id="playToggle" type="button" aria-pressed="true" hidden>
+      <svg class="ic" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <rect x="3" y="2" width="3.5" height="12" rx="1"/>
+        <rect x="9.5" y="2" width="3.5" height="12" rx="1"/>
+      </svg>
+      <span class="sound-label" data-i18n="film.pause">{sq['film.pause']}</span>
+    </button>
+
+    <button class="film-btn" id="soundToggle" type="button" aria-pressed="false" hidden>
+      <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7.5 2.5 4 5.5H1.5v5H4l3.5 3v-11Z"/>
+        <path d="M10.5 6a3 3 0 0 1 0 4"/>
+      </svg>
+      <span class="sound-label" data-i18n="film.on">{sq['film.on']}</span>
+    </button>
+  </div>
 
   <div class="opening-inner">
     <h1 class="name"><span>Jonuz</span><span>Markaj</span></h1>
@@ -19,4 +41,13 @@ import { sq } from '../data/content.js';
     </div>
     <p class="film-caption" data-i18n="hero.caption">{sq['hero.caption']}</p>
   </div>
+
+  <dl class="stats">
+    {stats.map((n) => (
+      <div>
+        <dt class="stat-v" data-i18n={`st.${n}.v`}>{sq[`st.${n}.v`]}</dt>
+        <dd class="stat-l" data-i18n={`st.${n}.l`}>{sq[`st.${n}.l`]}</dd>
+      </div>
+    ))}
+  </dl>
 </section>

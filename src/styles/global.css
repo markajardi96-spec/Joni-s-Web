@@ -1,354 +1,648 @@
 /* =========================================================
    Jonuz Markaj — pianist
-   Concept: "the string" — one ochre line down the page, with a
-   node where each section attaches. Sections hang off it,
-   asymmetric and left-aligned. Daylight palette, taken from the
-   outdoor terrace weddings his recordings are actually filmed at.
+   Concept: "the room goes dark and the piano is lit."
+   A blacked-out stage, the film burning behind everything,
+   and one warm key light — amber falling to rose — washing in
+   from the upper left the way it does in his own recordings.
+   Everything below the hero stays quiet: hairlines, no shadows,
+   no gradients. The film and the name carry the whole page.
+   Written mobile-first; the wider layouts are the exceptions.
    ========================================================= */
 
 :root{
-  --ground:#f4f6f0;      /* limewash */
-  --ground-2:#e9ede2;    /* shaded limewash */
-  --ink:#1b2a21;         /* pine */
-  --ink-2:#3e5347;
-  --moss:#6b8272;        /* secondary text */
-  --red:#a81c2e;         /* Albanian red, deepened */
-  --red-ink:#f7f4ec;
-  --ochre:#c98a2b;       /* the string */
-  --hair:#d3dacb;
+  color-scheme:dark;
+
+  --ink:#0A0810;         /* blackout */
+  --ink-2:#141019;       /* raised surface */
+  --ink-3:#1D1724;       /* input wells, hover */
+  --cream:#F7F2EA;       /* foreground */
+  --muted:#A79EAE;       /* secondary text — 6.2:1 on --ink */
+  --gold:#E9B872;        /* the key light */
+  --gold-ink:#170F04;    /* text on gold */
+  --rose:#C4587E;        /* the wash it falls to */
+  --hair:rgba(247,242,234,.13);
+  --hair-2:rgba(247,242,234,.22);
 
   --display:Fraunces,Georgia,"Times New Roman",serif;
   --body:Karla,"Helvetica Neue",Arial,sans-serif;
 
-  --rail:clamp(18px,4vw,64px);   /* where the string sits */
-  --gutter:clamp(20px,5vw,56px);
-  --wide:1180px;
-  --measure:68ch;
-}
+  --gutter:clamp(20px,5.5vw,72px);
+  --wide:1240px;
+  --measure:64ch;
 
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --ground:#141a16;
-    --ground-2:#1c241e;
-    --ink:#edf0e6;
-    --ink-2:#c6d0c0;
-    --moss:#8ca092;
-    --red:#e07886;
-    --red-ink:#160b0e;
-    --ochre:#d9a84e;
-    --hair:#2c3730;
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#141a16;
-  --ground-2:#1c241e;
-  --ink:#edf0e6;
-  --ink-2:#c6d0c0;
-  --moss:#8ca092;
-  --red:#e07886;
-  --red-ink:#160b0e;
-  --ochre:#d9a84e;
-  --hair:#2c3730;
+  --step:clamp(64px,10vw,140px);   /* vertical rhythm between bands */
+  --r:14px;                        /* the one radius for surfaces  */
+  --r-pill:999px;                  /* the one radius for controls  */
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  scroll-padding-top:96px;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+
 body{
   margin:0;
-  background:var(--ground);
-  color:var(--ink);
+  background:var(--ink);
+  color:var(--cream);
   font-family:var(--body);
-  font-size:clamp(16px,.4vw + 15px,17.5px);
-  line-height:1.62;
+  font-size:clamp(16px,.35vw + 15.2px,17.5px);
+  line-height:1.65;
   font-weight:350;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;            /* the hero wash bleeds; the page must not */
 }
+
 img{max-width:100%;display:block}
 p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
 a{color:inherit}
 em{font-style:italic}
 
 h1,h2,h3{
   font-family:var(--display);
-  font-weight:450;
-  font-variation-settings:"SOFT" 28,"WONK" 1;
-  line-height:1.06;
-  letter-spacing:-.015em;
+  font-weight:500;
+  font-variation-settings:"SOFT" 30,"WONK" 1;
+  line-height:1.05;
+  letter-spacing:-.02em;
   margin:0 0 .5em;
   text-wrap:balance;
 }
 
-:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-
-.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--ground);padding:.6rem 1rem;z-index:100}
-.skip:focus{left:8px;top:8px}
-
-/* ---------------- topbar ---------------- */
-.topbar{
-  position:sticky;top:0;z-index:40;
-  display:flex;align-items:baseline;gap:1.4rem;
-  padding:1rem var(--gutter);
-  background:color-mix(in srgb,var(--ground) 90%,transparent);
-  backdrop-filter:blur(8px);
-}
-.topbar-name{
-  font-family:var(--display);font-size:1.02rem;font-weight:500;
-  text-decoration:none;white-space:nowrap;
-}
-.topbar-nav{display:flex;gap:1.5rem;margin-left:auto}
-.topbar-nav a{font-size:.92rem;color:var(--moss);text-decoration:none}
-.topbar-nav a:hover{color:var(--ink)}
-.topbar-side{display:flex;align-items:baseline;gap:1rem;margin-left:auto}
-.topbar-nav + .topbar-side{margin-left:1.5rem}
-.topbar-book{font-size:.92rem;color:var(--red);text-decoration:none;border-bottom:1px solid currentColor}
-.lang{
-  font:inherit;font-size:.86rem;color:var(--moss);
-  background:none;border:0;padding:0;cursor:pointer;
-  border-bottom:1px solid var(--hair);
-}
-.lang:hover{color:var(--ink);border-bottom-color:var(--ochre)}
-
-/* ---------------- the string ----------------
-   One line down the whole page; each section pins a node to it. */
-#main{position:relative}
-#main::before{
-  content:"";position:absolute;z-index:3;
-  left:var(--rail);top:0;bottom:0;width:1px;
-  background:var(--ochre);opacity:.55;
-  transform:scaleY(0);transform-origin:top;
-  animation:string 1.5s cubic-bezier(.22,1,.36,1) .15s forwards;
-}
-@keyframes string{to{transform:scaleY(1)}}
-
-.band,.opening{position:relative;z-index:1}
-.band::before{
-  content:"";position:absolute;z-index:2;
-  left:var(--rail);top:clamp(3rem,7vw,5.2rem);
-  width:7px;height:7px;margin-left:-3px;
-  background:var(--ochre);transform:rotate(45deg);
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+  border-radius:4px;
 }
 
-/* ---------------- shared bits ---------------- */
-.band{
-  max-width:var(--wide);margin:0 auto;
-  padding-block:clamp(3rem,7vw,5.6rem);
-  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
-  padding-right:var(--gutter);
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--gold);color:var(--gold-ink);
+  padding:12px 18px;border-radius:0 0 var(--r) 0;font-weight:600;
 }
-.band-title{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-bottom:.4em}
-.band-lede{color:var(--moss);max-width:56ch;margin-bottom:2.6rem}
-.band-more{margin:2.4rem 0 0}
+.skip:focus{left:0}
+
+/* =========================================================
+   Controls
+   ========================================================= */
 
 .btn{
-  display:inline-block;text-decoration:none;cursor:pointer;
-  font:inherit;font-size:.96rem;font-weight:500;
-  padding:.72rem 1.4rem;border:1px solid transparent;border-radius:2px;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 26px;
+  border-radius:var(--r-pill);border:1px solid transparent;
+  font:inherit;font-weight:600;font-size:.95rem;letter-spacing:.005em;
+  text-decoration:none;cursor:pointer;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
 }
-.btn-solid{background:var(--red);color:var(--red-ink)}
-.btn-solid:hover{background:var(--ink)}
-.btn-quiet{color:var(--ink);border-color:var(--hair)}
-.btn-quiet:hover{border-color:var(--ink)}
-.link{color:var(--red);text-decoration:none;border-bottom:1px solid var(--hair)}
-.link:hover{border-bottom-color:currentColor}
+.btn-solid{background:var(--cream);color:var(--ink)}
+.btn-quiet{background:transparent;color:var(--cream);border-color:var(--hair-2)}
 
-/* ---------------- opening ----------------
-   Full-bleed film behind the name. The still is always the ground, so
-   the type treatment is the same whether or not the film ever plays. */
-.opening{
-  position:relative;z-index:0;
-  display:grid;align-items:end;
-  min-height:clamp(430px,72vh,700px);
-  overflow:hidden;
-  background:var(--ink) url("https://i.ytimg.com/vi/06KV0G01k4E/maxresdefault.jpg") center/cover no-repeat;
+@media (hover:hover){
+  .btn-solid:hover{background:var(--gold);color:var(--gold-ink)}
+  .btn-quiet:hover{border-color:var(--cream);background:rgba(247,242,234,.07)}
+}
+.btn:active{transform:translateY(1px)}
 
-  /* Light palette for this section only. `color` inherits as a computed
-     value, so it has to be re-declared here or children keep body's ink. */
-  --ink:#f6f4ec;
-  --ink-2:#e2e0d4;
-  --moss:#c2c8ba;
-  --hair:rgba(246,244,236,.42);
-  --red:#e2606e;
-  --red-ink:#1a0d10;
-  color:var(--ink);
+.link{
+  color:var(--gold);text-decoration:none;
+  border-bottom:1px solid rgba(233,184,114,.4);
+  padding-bottom:2px;transition:border-color .2s ease;
 }
-.opening-inner{
-  position:relative;z-index:2;
-  width:100%;max-width:var(--wide);margin:0 auto;
-  padding-block:clamp(2.5rem,7vw,4.5rem);
-  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
-  padding-right:var(--gutter);
+@media (hover:hover){ .link:hover{border-bottom-color:var(--gold)} }
+
+/* =========================================================
+   Topbar — floats over the film, condenses once you scroll
+   ========================================================= */
+
+.topbar{
+  position:fixed;z-index:50;
+  top:12px;left:12px;right:12px;
+  display:flex;align-items:center;gap:12px;
+  padding:8px 8px 8px 16px;
+  border-radius:var(--r-pill);
+  border:1px solid transparent;
+  transition:background-color .3s ease,border-color .3s ease,backdrop-filter .3s ease;
 }
-.film-caption{
-  margin:2.2rem 0 0;font-size:.84rem;color:var(--moss);
+.topbar.scrolled{
+  background:rgba(10,8,16,.78);
+  border-color:var(--hair);
+  backdrop-filter:blur(14px) saturate(1.3);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
 }
-.name{
-  font-size:clamp(3.4rem,12vw,8.5rem);
-  font-weight:400;
-  font-variation-settings:"SOFT" 40,"WONK" 1,"opsz" 144;
-  line-height:.86;letter-spacing:-.035em;
-  margin:0;
+
+.topbar-name{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--display);font-weight:600;font-size:1.02rem;
+  letter-spacing:-.015em;text-decoration:none;white-space:nowrap;
+  margin-right:auto;
+}
+.topbar-name .keys{flex:none;color:var(--gold)}
+
+.topbar-nav{display:none}
+
+.topbar-side{display:flex;align-items:center;gap:6px}
+
+.topbar-book{
+  display:none;align-items:center;justify-content:center;
+  min-height:42px;padding:0 20px;border-radius:var(--r-pill);
+  background:var(--gold);color:var(--gold-ink);
+  font-weight:600;font-size:.9rem;text-decoration:none;
+  transition:filter .2s ease;
+}
+@media (hover:hover){ .topbar-book:hover{filter:brightness(1.1)} }
+
+.lang{
+  min-height:42px;min-width:44px;padding:0 14px;
+  background:transparent;color:var(--cream);
+  border:1px solid var(--hair-2);border-radius:var(--r-pill);
+  font:inherit;font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:border-color .2s ease,background-color .2s ease;
+}
+@media (hover:hover){ .lang:hover{border-color:var(--cream);background:rgba(247,242,234,.07)} }
+
+/* the mobile disclosure */
+.menu-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;flex:none;
+  background:transparent;border:1px solid var(--hair-2);
+  border-radius:var(--r-pill);color:var(--cream);cursor:pointer;
+}
+.menu-btn span{
+  position:relative;display:block;width:16px;height:1.5px;
+  background:currentColor;transition:background-color .2s ease;
+}
+.menu-btn span::before,
+.menu-btn span::after{
+  content:"";position:absolute;left:0;width:16px;height:1.5px;background:currentColor;
+  transition:transform .25s ease,top .25s ease;
+}
+.menu-btn span::before{top:-5px}
+.menu-btn span::after{top:5px}
+.menu-btn[aria-expanded="true"] span{background:transparent}
+.menu-btn[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
+
+.menu{
+  position:fixed;z-index:49;
+  top:72px;left:12px;right:12px;
   display:flex;flex-direction:column;
+  padding:10px;
+  background:rgba(10,8,16,.94);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--hair);border-radius:var(--r);
 }
-.name span:last-child{margin-left:.08em}
-.role{
-  font-family:var(--display);font-style:italic;font-size:1.3rem;
-  color:var(--moss);margin:.5rem 0 0;
+.menu[hidden]{display:none}
+.menu a{
+  display:flex;align-items:center;min-height:52px;padding:0 14px;
+  border-radius:10px;text-decoration:none;font-size:1.05rem;
 }
-.opening-line{max-width:46ch;margin:1.6rem 0 0;color:var(--ink-2);font-size:1.06rem}
-.opening-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+.menu a + a{border-top:1px solid var(--hair)}
+.menu a.menu-book{
+  margin-top:8px;border-top:0;justify-content:center;
+  background:var(--gold);color:var(--gold-ink);font-weight:600;
+}
 
-/* the film, filling the whole opening */
-.film{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.4s ease}
-.opening.playing .film{opacity:1}
+@media (min-width:900px){
+  .topbar{top:18px;left:24px;right:24px;padding:8px 8px 8px 22px}
+  .topbar-name{margin-right:0}
+  .topbar-nav{
+    display:flex;gap:4px;margin:0 auto;
+  }
+  .topbar-nav a{
+    padding:10px 15px;border-radius:var(--r-pill);
+    font-size:.92rem;text-decoration:none;color:var(--muted);
+    transition:color .2s ease,background-color .2s ease;
+  }
+  .topbar-nav a:hover{color:var(--cream);background:rgba(247,242,234,.07)}
+  .topbar-book{display:inline-flex}
+  .menu-btn,.menu{display:none}
+}
+
+/* =========================================================
+   The opening — film, name, stat strip
+   ========================================================= */
+
+.opening{
+  position:relative;
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:132px var(--gutter) 0;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* The film itself, scaled to cover whatever the viewport is. */
+.film{
+  position:absolute;inset:0;z-index:-3;
+  background:#000 center/cover no-repeat;
+}
+/* The frame stays invisible until the film is genuinely rolling. Until
+   then the still above carries the section — otherwise a refused autoplay
+   leaves YouTube's own red play badge sitting in the middle of the page. */
+/* Asymmetric on purpose: out fast, so YouTube's control overlay is gone
+   almost before it is drawn, and back in slowly so the film arrives. */
+.film iframe{opacity:0;transition:opacity .2s ease}
+.opening.rolling .film iframe{opacity:1;transition:opacity 1.4s ease}
 .film iframe{
   position:absolute;top:50%;left:50%;
-  width:max(100vw,177.78vh);height:max(56.25vw,100vh);
-  transform:translate(-50%,-50%);
+  width:max(100vw,177.78svh);
+  height:max(100svh,56.25vw);
+  /* Overscaled on purpose: YouTube paints its title bar along the top and
+     its control bar along the bottom of the frame no matter what the
+     player vars say, so the frame is grown past the viewport until both
+     sit outside it. */
+  transform:translate(-50%,-50%) scale(1.35);
   border:0;pointer-events:none;
 }
-/* Scrim sits above the film, below the text: heavier at the lower-left
-   where the name and buttons are, lighter over the valley view. */
-.opening::before{
-  content:"";position:absolute;inset:0;z-index:1;
+
+/* The key light. One warm wash from the upper left, falling to rose,
+   plus a floor of near-black under the type so it always clears 4.5:1. */
+.film::after{
+  content:"";position:absolute;inset:0;
   background:
-    linear-gradient(100deg,rgba(14,22,17,.86) 0%,rgba(14,22,17,.62) 42%,rgba(14,22,17,.3) 78%),
-    linear-gradient(0deg,rgba(14,22,17,.75) 0%,rgba(14,22,17,.12) 55%,rgba(14,22,17,.4) 100%);
+    radial-gradient(120% 90% at 8% 0%, rgba(233,184,114,.30), transparent 58%),
+    radial-gradient(110% 80% at 88% 18%, rgba(196,88,126,.26), transparent 62%),
+    /* The floor. Dark under the bar so the nav reads, dark again under the
+       type, and a thinner middle so the playing stays visible. On a phone
+       the copy runs the full width with no column to hide in, so the floor
+       is heavier there and lightens as the screen widens. */
+    linear-gradient(to bottom,
+      rgba(10,8,16,.88) 0%, rgba(10,8,16,.66) 18%,
+      rgba(10,8,16,.62) 44%, rgba(10,8,16,.93) 78%, var(--ink) 100%);
 }
 
-.sound{
-  position:absolute;right:var(--gutter);top:1.1rem;z-index:4;
-  display:inline-flex;align-items:center;gap:.45rem;
-  font:inherit;font-size:.82rem;color:#f6f4ec;
-  background:rgba(14,22,17,.5);backdrop-filter:blur(4px);
-  border:1px solid rgba(246,244,236,.32);border-radius:2px;
-  padding:.34rem .7rem;cursor:pointer;
+@media (min-width:900px){
+  /* Wide enough for the type to sit in the left half, so the floor can
+     lift and a side scrim carries legibility instead. */
+  .film::after{
+    background:
+      radial-gradient(120% 90% at 8% 0%, rgba(233,184,114,.30), transparent 58%),
+      radial-gradient(110% 80% at 88% 18%, rgba(196,88,126,.26), transparent 62%),
+      linear-gradient(to bottom,
+        rgba(10,8,16,.86) 0%, rgba(10,8,16,.48) 18%,
+        rgba(10,8,16,.38) 40%, rgba(10,8,16,.90) 78%, var(--ink) 100%),
+      linear-gradient(to right, rgba(10,8,16,.74) 0%, rgba(10,8,16,.20) 62%, transparent 100%);
+  }
 }
-.sound[hidden]{display:none}
-.sound:hover{background:rgba(14,22,17,.78)}
-.sound-icon{width:8px;height:8px;border-radius:50%;background:var(--ochre);flex:none}
 
-/* ---------------- note ---------------- */
-.note{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(1.6rem,4vw,3.5rem)}
-.note-lead h2{font-size:clamp(1.6rem,3.2vw,2.35rem);margin:0}
-.note-body{max-width:var(--measure)}
-.note-body p{color:var(--ink-2)}
-.note-meta{color:var(--moss);font-size:.95rem}
-
-/* ---------------- events ---------------- */
-/* No cards: each entry is text, offset from the one before it. */
-.event{max-width:58ch;padding-block:clamp(1.2rem,2.5vw,1.8rem)}
-.event + .event{border-top:1px solid var(--hair)}
-.event:nth-child(3){margin-left:clamp(0px,4vw,5rem)}
-.event:nth-child(4){margin-left:clamp(0px,8vw,10rem)}
-.event h3{font-size:clamp(1.3rem,2.2vw,1.7rem);margin-bottom:.35em}
-.event p{color:var(--ink-2)}
-.event-note{color:var(--moss);font-size:.93rem;margin:0}
-
-/* ---------------- recordings ---------------- */
-/* Staggered, varied sizes — a wall of stills, not a uniform grid. */
-/* Even grid: every still the same size, captions on a shared baseline. */
-.plates{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:clamp(1.1rem,2.4vw,1.9rem) clamp(1rem,2vw,1.6rem);
-  align-items:start;
+.opening-inner{
+  position:relative;
+  width:100%;max-width:var(--wide);margin:0 auto;
+  padding-bottom:34px;
 }
-.plate{display:flex;flex-direction:column}
+
+.name{
+  display:flex;flex-direction:column;
+  font-size:clamp(3.1rem,15.5vw,9.5rem);
+  font-weight:600;
+  font-variation-settings:"SOFT" 22,"WONK" 0;
+  line-height:.92;
+  letter-spacing:-.04em;
+  margin:0;
+}
+.name span:last-child{color:var(--gold)}
+
+.role{
+  font-size:clamp(.82rem,2.6vw,1rem);
+  letter-spacing:.34em;
+  text-transform:lowercase;
+  color:var(--muted);
+  margin:14px 0 0;
+}
+
+.opening-line{
+  max-width:46ch;
+  margin:20px 0 0;
+  font-size:clamp(1rem,2.6vw,1.2rem);
+  color:rgba(247,242,234,.88);
+}
+
+.opening-actions{
+  display:flex;flex-wrap:wrap;gap:12px;
+  margin-top:28px;
+}
+.opening-actions .btn{flex:1 1 auto;min-width:min(100%,240px)}
+
+.film-caption{
+  margin:20px 0 0;
+  font-size:.82rem;font-style:italic;color:var(--muted);
+}
+
+/* The stat strip along the base of the film. */
+.stats{
+  position:relative;
+  width:100%;max-width:var(--wide);margin:0 auto;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:22px 18px;
+  padding:26px 0 30px;
+  border-top:1px solid var(--hair);
+}
+.stats dd{margin:0}
+.stat-v{
+  display:block;
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(1.6rem,6vw,2.3rem);
+  line-height:1;letter-spacing:-.02em;
+  color:var(--gold);
+}
+.stat-l{
+  display:block;margin-top:7px;
+  font-size:.8rem;line-height:1.35;color:var(--muted);
+}
+
+@media (min-width:760px){
+  .stats{grid-template-columns:repeat(4,1fr);gap:24px}
+}
+@media (min-width:900px){
+  .opening{padding-top:150px}
+  .opening-actions .btn{flex:0 0 auto;min-width:0}
+}
+
+/* The film controls, bottom right of the opening. */
+.film-controls{
+  position:absolute;z-index:2;
+  right:var(--gutter);
+  top:96px;
+  display:flex;gap:8px;
+}
+.film-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:44px;padding:0 14px;
+  background:rgba(10,8,16,.6);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--hair-2);border-radius:var(--r-pill);
+  color:var(--cream);font:inherit;font-size:.8rem;cursor:pointer;
+  transition:border-color .2s ease,background-color .2s ease;
+}
+.film-btn[hidden]{display:none}
+@media (hover:hover){
+  .film-btn:hover{border-color:var(--cream);background:rgba(10,8,16,.8)}
+}
+.film-btn .sound-label{display:none}
+@media (min-width:560px){
+  .film-btn .sound-label{display:inline}
+}
+@media (min-width:900px){
+  .film-controls{top:112px}
+}
+
+/* the icons inside the film controls */
+.ic{width:15px;height:15px;flex:none;display:block}
+
+/* =========================================================
+   Bands — everything below the opening
+   ========================================================= */
+
+.band{
+  width:100%;max-width:var(--wide);
+  margin:0 auto;
+  padding:var(--step) var(--gutter);
+}
+.band + .band{padding-top:0}
+
+.band-title{
+  font-size:clamp(2rem,7vw,3.4rem);
+  margin:0 0 .35em;
+}
+.band-lede{
+  max-width:var(--measure);
+  color:var(--muted);
+  margin:0 0 2.4em;
+}
+
+/* ---------- the note ---------- */
+
+.note{display:grid;gap:26px}
+.note-lead h2{
+  font-size:clamp(1.65rem,5.4vw,2.7rem);
+  font-weight:400;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+  font-style:italic;
+  letter-spacing:-.015em;
+  margin:0;
+  color:var(--cream);
+}
+.note-body{max-width:var(--measure);color:rgba(247,242,234,.84)}
+.note-body em{color:var(--gold);font-style:italic}
+.note-meta{color:var(--muted);font-size:.94rem}
+
+@media (min-width:900px){
+  .note{grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+}
+
+/* ---------- events ---------- */
+
+.events{display:grid;gap:14px}
+.events .band-title{grid-column:1/-1}
+
+.event{
+  padding:26px 22px;
+  background:var(--ink-2);
+  border:1px solid var(--hair);
+  border-radius:var(--r);
+}
+.event h3{
+  font-size:1.3rem;margin:0 0 .5em;
+  color:var(--gold);
+}
+.event p{color:rgba(247,242,234,.82);font-size:.97rem}
+.event-note{
+  margin:16px 0 0;padding-top:14px;
+  border-top:1px solid var(--hair);
+  color:var(--muted);font-size:.85rem;
+}
+
+@media (min-width:760px){
+  .events{grid-template-columns:repeat(3,1fr);gap:16px}
+}
+
+/* ---------- recordings ---------- */
+
+.plates{display:grid;gap:18px}
 
 .plate-frame{
-  position:relative;width:100%;aspect-ratio:16/10;
-  border:0;padding:0;margin:0;display:block;cursor:pointer;
-  background:var(--ground-2) center/cover no-repeat;
+  position:relative;display:block;width:100%;
+  aspect-ratio:16/9;
+  padding:0;border:1px solid var(--hair);
+  border-radius:var(--r);
+  background-color:var(--ink-2);
+  background-size:cover;background-position:center;
+  cursor:pointer;overflow:hidden;
+  transition:border-color .25s ease;
 }
-.plate-frame::after{
+.plate-frame::before{
   content:"";position:absolute;inset:0;
-  background:rgba(27,42,33,.18);transition:background .3s;
+  background:linear-gradient(to top,rgba(10,8,16,.6),rgba(10,8,16,.05) 60%);
+  transition:background .25s ease;
 }
-.plate-frame:hover::after{background:rgba(27,42,33,0)}
-.play{
-  position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;
-  background:var(--red);display:grid;place-items:center;z-index:2;
+@media (hover:hover){
+  .plate-frame:hover{border-color:var(--hair-2)}
+  .plate-frame:hover .play{background:var(--gold);color:var(--gold-ink);transform:translate(-50%,-50%) scale(1.06)}
 }
-.play::before{
-  content:"";border-left:13px solid var(--red-ink);
-  border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px;
-}
-.plate iframe{width:100%;aspect-ratio:16/10;display:block;border:0}
-.plate-caption{padding-top:.7rem}
-.plate-caption .work{font-family:var(--display);font-size:1rem;display:block}
-.plate-caption .by{font-size:.84rem;color:var(--moss)}
 
-/* ---------------- repertoire ---------------- */
-.rep-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(1.8rem,4vw,3.5rem)}
-.rep-cols h3{font-size:1.2rem;color:var(--moss);font-weight:400;margin-bottom:.9rem}
+.play{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  display:grid;place-items:center;
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(247,242,234,.92);color:var(--ink);
+  transition:background .25s ease,color .25s ease,transform .25s ease;
+}
+.play::after{
+  content:"";
+  border-left:15px solid currentColor;
+  border-top:9px solid transparent;
+  border-bottom:9px solid transparent;
+  margin-left:4px;
+}
+
+.plates iframe{
+  width:100%;aspect-ratio:16/9;height:auto;
+  border:0;border-radius:var(--r);display:block;
+}
+
+.plate-caption{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
+  padding:12px 2px 0;
+}
+.plate-caption .work{font-weight:600}
+.plate-caption .by{color:var(--muted);font-size:.85rem}
+
+.band-more{margin:28px 0 0}
+
+@media (min-width:600px){ .plates{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1000px){ .plates{grid-template-columns:repeat(3,1fr)} }
+
+/* ---------- repertoire ---------- */
+
+.rep-cols{display:grid;gap:40px}
+.rep-cols h3{
+  font-size:.82rem;font-weight:600;
+  font-family:var(--body);
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);
+  padding-bottom:14px;margin:0 0 6px;
+  border-bottom:1px solid var(--hair-2);
+}
+
 .listing{list-style:none;margin:0;padding:0}
 .listing li{
-  display:flex;align-items:baseline;gap:.5rem;
-  padding-block:.5rem;border-bottom:1px solid var(--hair);
+  display:flex;align-items:baseline;gap:10px;
+  padding:14px 0;
+  border-bottom:1px solid var(--hair);
 }
-.listing .work{font-family:var(--display);font-size:1.02rem;flex:0 1 auto}
-/* leader dots: a real concert-programme device, kept only here */
-.dots{flex:1 1 1.5rem;min-width:1rem;align-self:baseline;border-bottom:1px dotted var(--hair);transform:translateY(-.3em)}
-.listing .by{font-size:.86rem;color:var(--moss);white-space:nowrap;flex:0 0 auto}
+.listing .work{font-size:1.02rem}
+.listing .dots{
+  flex:1 1 auto;min-width:16px;
+  border-bottom:1px dotted var(--hair-2);
+  transform:translateY(-4px);
+}
+.listing .by{color:var(--muted);font-size:.85rem;text-align:right}
 
-/* ---------------- booking ---------------- */
+@media (min-width:800px){ .rep-cols{grid-template-columns:1fr 1fr;gap:56px} }
+
+/* ---------- booking ---------- */
+
 .booking{
-  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
-  gap:clamp(1.8rem,4vw,3.5rem);
+  display:grid;gap:36px;
+  scroll-margin-top:90px;
 }
-.booking h2{font-size:clamp(1.7rem,3.4vw,2.5rem)}
-.booking-text p{color:var(--ink-2);max-width:42ch}
-.direct{list-style:none;margin:1.8rem 0 0;padding:0}
-.direct li{padding-block:.5rem;border-bottom:1px solid var(--hair);font-size:.95rem}
-.direct li span{color:var(--moss);display:inline-block;min-width:5.5rem}
-.direct a{color:var(--red);text-decoration:none}
-.direct a:hover{text-decoration:underline}
 
-.form{display:flex;flex-direction:column;gap:.85rem}
-.form .row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
-.form label{display:flex;flex-direction:column;gap:.3rem;font-size:.88rem;color:var(--moss)}
-.form input,.form select,.form textarea{
-  font:inherit;font-size:.98rem;color:var(--ink);width:100%;min-width:0;
-  background:var(--ground);border:1px solid var(--hair);border-radius:2px;
-  padding:.6rem .7rem;
+.booking-text h2{font-size:clamp(2rem,7vw,3.4rem);margin:0 0 .35em}
+.booking-text p{color:var(--muted);max-width:44ch}
+
+.direct{list-style:none;margin:28px 0 0;padding:0}
+.direct li{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;
+  padding:14px 0;border-top:1px solid var(--hair);
 }
-.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--red)}
-.form textarea{resize:vertical}
-.form .btn{align-self:flex-start;margin-top:.4rem}
-.form-note{font-size:.88rem;color:var(--red);min-height:1.2em;margin:0}
+.direct li span{
+  flex:0 0 auto;min-width:78px;
+  font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.direct li a{color:var(--gold);text-decoration:none;word-break:break-word}
+@media (hover:hover){ .direct li a:hover{text-decoration:underline} }
 
-/* ---------------- footer ---------------- */
+.form{
+  display:grid;gap:16px;
+  padding:26px 22px;
+  background:var(--ink-2);
+  border:1px solid var(--hair);
+  border-radius:var(--r);
+}
+.form .row{display:grid;gap:16px}
+
+.form label{display:grid;gap:7px}
+.form label > span{
+  font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+.form input,
+.form select,
+.form textarea{
+  width:100%;
+  min-height:48px;padding:12px 14px;
+  background:var(--ink-3);
+  color:var(--cream);
+  border:1px solid var(--hair);
+  border-radius:10px;
+  font:inherit;font-size:16px;      /* 16px stops iOS zooming on focus */
+  transition:border-color .2s ease;
+}
+.form textarea{min-height:110px;resize:vertical;line-height:1.5}
+.form input:focus,
+.form select:focus,
+.form textarea:focus{border-color:var(--gold);outline:none}
+.form input:focus-visible,
+.form select:focus-visible,
+.form textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+
+/* the date input's own icon is near-invisible on a dark well */
+.form input[type="date"]::-webkit-calendar-picker-indicator{
+  filter:invert(1);opacity:.6;cursor:pointer;
+}
+
+.form .btn{margin-top:4px;justify-self:stretch}
+.form-note{margin:0;font-size:.9rem;color:var(--gold);min-height:1.3em}
+.form-note[data-state="error"]{color:#FF9DA6}
+
+@media (min-width:560px){
+  .form .row{grid-template-columns:1fr 1fr}
+  .form{padding:32px 28px}
+  /* Full width is right under the thumb on a phone; at this width the
+     button would just be a very wide target for no reason. */
+  .form .btn{justify-self:start}
+}
+@media (min-width:980px){
+  .booking{grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+}
+
+/* ---------- footer ---------- */
+
 .footer{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   max-width:var(--wide);margin:0 auto;
-  padding-block:2.2rem;
-  padding-left:calc(var(--rail) + clamp(20px,4vw,52px));
-  padding-right:var(--gutter);
-  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  padding:26px var(--gutter) 34px;
+  margin-top:var(--step);
   border-top:1px solid var(--hair);
-  font-size:.86rem;color:var(--moss);
+  color:var(--muted);font-size:.86rem;
 }
-.footer a{color:var(--moss);text-decoration:none;border-bottom:1px solid var(--hair)}
-.footer a:hover{color:var(--ink)}
+.footer a{color:var(--muted);text-decoration:none}
+@media (hover:hover){ .footer a:hover{color:var(--cream)} }
 
-/* ---------------- responsive ---------------- */
-@media (max-width:900px){
-  .note,.booking{grid-template-columns:1fr}
-  .topbar-nav{display:none}
-  .event:nth-child(3),.event:nth-child(4){margin-left:0}
-}
-@media (max-width:560px){
-  .form .row{grid-template-columns:1fr}
-  .opening-actions .btn{flex:1 1 100%;text-align:center}
-  .listing li{flex-wrap:wrap;gap:0 .5rem}
-  .dots{display:none}
-  .listing .by{flex-basis:100%}
-}
-
-/* The film is an enhancement — never on phones, never under reduced motion. */
+/* =========================================================
+   Reduced motion — the film never starts (see site.js), and
+   nothing else here moves on its own.
+   ========================================================= */
 @media (prefers-reduced-motion:reduce){
-  .sound{display:none}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-  #main::before{transform:scaleY(1)}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+  }
 }

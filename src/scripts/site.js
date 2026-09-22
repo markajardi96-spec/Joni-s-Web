@@ -60,6 +60,7 @@ function setLang(lang) {
    starts, the still stays the ground and the page is intact. */
 const opening = document.getElementById('top');
 const soundBtn = document.getElementById('soundToggle');
+const playBtn = document.getElementById('playToggle');
 let player = null;
 
 function filmAllowed() {
@@ -94,6 +95,16 @@ function startFilm() {
         // refused (iOS low-power mode, strict autoplay settings) this button
         // is how the visitor starts it.
         soundBtn.hidden = false;
+        playBtn.hidden = false;
+      },
+      onStateChange: (e) => {
+        const S = window.YT.PlayerState;
+        // The frame is only ever visible while the film is moving. The
+        // moment it stops, YouTube paints its own controls across the
+        // middle of the page, so we dissolve back to the still instead.
+        const rolling = e.data === S.PLAYING || e.data === S.BUFFERING;
+        opening.classList.toggle('rolling', rolling);
+        setPlayLabel();
       },
     },
   });
@@ -143,13 +154,51 @@ soundBtn.addEventListener('click', () => {
   label.textContent = DICTS[current][key];
 });
 
+/* Pause/play. WCAG 2.2.2: motion that starts on its own and runs past
+   five seconds needs a way to stop it.
+
+   `userPaused` is the visitor's own choice, and only the button sets it —
+   the scroll observer below pauses too, but must never override a choice
+   they made. The label is read off the player's real state rather than
+   off either flag, so a refused autoplay shows "play", not "pause". */
+let userPaused = false;
+
+function isPlaying() {
+  return !!player
+    && typeof player.getPlayerState === 'function'
+    && player.getPlayerState() === window.YT.PlayerState.PLAYING;
+}
+
+function setPlayLabel() {
+  const playing = isPlaying();
+  const key = playing ? 'film.pause' : 'film.play';
+  const label = playBtn.querySelector('.sound-label');
+  label.dataset.i18n = key;
+  label.textContent = DICTS[current][key];
+  playBtn.setAttribute('aria-pressed', String(playing));
+  playBtn.querySelector('svg').innerHTML = playing
+    ? '<rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/>'
+    : '<path d="M4 2.5 13 8l-9 5.5V2.5Z"/>';
+}
+
+playBtn.addEventListener('click', () => {
+  if (!player) return;
+  if (isPlaying()) {
+    userPaused = true;
+    player.pauseVideo();
+  } else {
+    userPaused = false;
+    player.playVideo();
+  }
+});
+
 // Stop the film once it has scrolled out of sight.
 if ('IntersectionObserver' in window) {
   new IntersectionObserver((entries) => {
     if (!player || typeof player.pauseVideo !== 'function') return;
     for (const entry of entries) {
-      if (entry.isIntersecting) player.playVideo();
-      else player.pauseVideo();
+      if (entry.isIntersecting && !userPaused) player.playVideo();
+      else if (!entry.isIntersecting) player.pauseVideo();
     }
   }, { threshold: 0.2 }).observe(opening);
 }
@@ -161,3 +210,48 @@ document.getElementById('langToggle').addEventListener('click', () => {
   setLang(current === 'en' ? 'sq' : 'en');
 });
 loadFilm();
+
+/* ---------- topbar ----------
+   The bar sits transparent over the film and only grows a background
+   once there is page behind it. */
+const topbar = document.getElementById('topbar');
+const menuBtn = document.getElementById('menuToggle');
+const menu = document.getElementById('menu');
+
+if ('IntersectionObserver' in window) {
+  // A one-pixel sentinel at the top beats a scroll listener: no work
+  // happens on any frame except the two where the state actually flips.
+  const sentinel = document.createElement('div');
+  sentinel.style.cssText = 'position:absolute;top:0;height:64px;width:1px;pointer-events:none';
+  opening.append(sentinel);
+  new IntersectionObserver(
+    ([e]) => topbar.classList.toggle('scrolled', !e.isIntersecting),
+    { threshold: 0 },
+  ).observe(sentinel);
+}
+
+function closeMenu() {
+  menu.hidden = true;
+  menuBtn.setAttribute('aria-expanded', 'false');
+}
+
+menuBtn.addEventListener('click', () => {
+  const open = menuBtn.getAttribute('aria-expanded') === 'true';
+  if (open) closeMenu();
+  else {
+    menu.hidden = false;
+    menuBtn.setAttribute('aria-expanded', 'true');
+  }
+});
+
+// Any link closes it, and so does Escape — otherwise the panel stays open
+// over the section it just jumped to.
+menu.addEventListener('click', (e) => { if (e.target.closest('a')) closeMenu(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') {
+    closeMenu();
+    menuBtn.focus();
+  }
+});
+// Leaving mobile width with the panel open would strand it on screen.
+window.matchMedia('(min-width: 900px)').addEventListener('change', closeMenu);
